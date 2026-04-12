@@ -959,7 +959,7 @@
     <span class="leg-item"><span class="leg-dot gray"></span>Not taken</span>
   </div>
 
-  <div class="filter-row">
+  <div class="filter-row" id="cat-row">
     <span class="filter-label">Category</span>
     <button class="f-btn active" onclick="setCat('all')">All courses</button>
     <button class="f-btn" onclick="setCat('bio-core')">Bio core</button>
@@ -970,7 +970,7 @@
     <button class="f-btn" onclick="setCat('core')">Univ core</button>
   </div>
 
-  <div class="filter-row">
+  <div class="filter-row" id="status-row">
     <span class="filter-label">Status</span>
     <button class="f-btn active" onclick="setStatus2('all')">All</button>
     <button class="f-btn" onclick="setStatus2('progress')">In progress</button>
@@ -1478,7 +1478,7 @@ function setStatus(code, newSt) {
 // ── FILTER BUTTONS ────────────────────────────────────────────────────────────
 function setCat(v) {
   CAT = v;
-  document.querySelectorAll('.filter-row:first-of-type .f-btn').forEach(b => {
+  document.querySelectorAll('#cat-row .f-btn').forEach(b => {
     b.classList.toggle('active', b.getAttribute('onclick').includes(`'${v}'`));
   });
   renderSections();
@@ -1486,7 +1486,7 @@ function setCat(v) {
 
 function setStatus2(v) {
   STATUS = v;
-  document.querySelectorAll('.filter-row:last-of-type .f-btn').forEach(b => {
+  document.querySelectorAll('#status-row .f-btn').forEach(b => {
     b.classList.toggle('active', b.getAttribute('onclick').includes(`'${v}'`));
   });
   renderSections();
