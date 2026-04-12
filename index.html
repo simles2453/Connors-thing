@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Biology BS — Degree Planner · LUC</title>
@@ -1660,8 +1659,9 @@ function renderPlan() {
               <input class="sem-info-input" type="text" placeholder="⏰ Time" value="${info.time || ''}" onchange="setPlanInfo('${c.code}', 'time', this.value)">
               <select class="sem-info-input" onchange="setPlanInfo('${c.code}', 'location', this.value)">
                 <option value="">📍 Campus</option>
-                <option value="Lake Shore" ${info.location === 'Lake Shore' ? 'selected' : ''}>Lake Shore</option>
-                <option value="Gold Coast" ${info.location === 'Gold Coast' ? 'selected' : ''}>Gold Coast</option>
+                <option value="Lake Shore" ${info.location === 'Lake Shore' ? 'selected' : ''}>🌊 Lake Shore</option>
+                <option value="Gold Coast" ${info.location === 'Gold Coast' ? 'selected' : ''}>🏙️ Gold Coast</option>
+                <option value="Online" ${info.location === 'Online' ? 'selected' : ''}>💻 Online</option>
               </select>
               <input class="sem-info-input" type="text" placeholder="👤 Professor" value="${info.prof || ''}" onchange="setPlanInfo('${c.code}', 'prof', this.value)">
             </div>
