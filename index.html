@@ -1881,7 +1881,6 @@ function renderSections() {
       courses.forEach(c => {
         const st = ST[c.code];
         const tagsHtml  = c.tags.map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join('');
-        const gradeHtml = c.grade ? `<span class="tag other">${c.grade}</span>` : '';
         const dispCode = highlight(c.code, SEARCH);
         const dispName = highlight(c.name, SEARCH);
 
@@ -1889,7 +1888,7 @@ function renderSections() {
           <div class="course-info">
             <div class="course-code">${dispCode}</div>
             <div class="course-name">${dispName}</div>
-            ${(tagsHtml || gradeHtml) ? `<div class="tags">${gradeHtml}${tagsHtml}</div>` : ''}
+            ${tagsHtml ? `<div class="tags">${tagsHtml}</div>` : ''}
             ${c.prereq ? `<div class="course-prereq">Prereq: ${c.prereq}</div>` : ''}
             <button class="desc-btn" onclick="showDesc('${c.code}', '${c.name.replace(/'/g,"\\'")}')">📖 About this course</button>
             <select class="sem-select${PLAN[c.code] ? ' assigned' : ''}" onchange="setSemester('${c.code}', this.value)">
