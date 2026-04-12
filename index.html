@@ -606,6 +606,21 @@
     box-shadow: 0 0 0 3px var(--br);
   }
 
+  .circle.planned {
+    background: #185FA5;
+    border-color: #0f3d6e;
+    box-shadow: 0 0 0 3px #daeaf7;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .circle.planned { box-shadow: 0 0 0 3px #0d2a40; }
+  }
+
+  .circle-wrap.no-click {
+    cursor: default;
+    pointer-events: none;
+  }
+
   .circle-label {
     font-size: 8.5px;
     color: var(--t3);
@@ -956,6 +971,7 @@
     <span id="legend-label">Legend</span>
     <span class="leg-item"><span class="leg-dot green"></span>Taken</span>
     <span class="leg-item"><span class="leg-dot amber"></span>In progress</span>
+    <span class="leg-item"><span class="leg-dot" style="background:#185FA5"></span>Planned</span>
     <span class="leg-item"><span class="leg-dot gray"></span>Not taken</span>
   </div>
 
@@ -997,6 +1013,21 @@
 <footer>
   Prerequisites shown are approximate — confirm all requirements with your academic advisor and the LUC registrar before enrolling.<br>
   Biology BS requires 67 major credits. Univ Core and elective credits are tracked separately from the 67-credit major total.
+  <div style="margin-top:20px">
+    <button id="reset-btn" onclick="masterReset()" style="
+      padding: 6px 16px;
+      border-radius: 6px;
+      border: 1px solid var(--rose);
+      background: transparent;
+      color: var(--rose);
+      font-family: inherit;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: all 0.15s;
+    ">⚠ Master Reset</button>
+  </div>
 </footer>
 
 <script>
@@ -1247,15 +1278,16 @@ function tagClass(t) {
 
 // All sections count toward the credit totals displayed in the header
 function computeTotals() {
-  let taken = 0, inprog = 0;
+  let taken = 0, inprog = 0, planned = 0;
   SECTIONS.forEach(sec => {
     sec.courses.forEach(c => {
       if (c.noCount) return;
       if (ST[c.code] === 'taken') taken += c.cr;
       else if (ST[c.code] === 'progress') inprog += c.cr;
+      else if (PLAN[c.code]) planned += c.cr;
     });
   });
-  return { taken, inprog };
+  return { taken, inprog, planned };
 }
 
 function setSemester(code, semId) {
@@ -1264,13 +1296,17 @@ function setSemester(code, semId) {
   saveState();
   if (VIEW === 'plan') renderPlan();
   else {
-    // update just the select in the course row
+    // update the select styling
     const row = document.querySelector(`.course-row[data-code="${CSS.escape(code)}"]`);
     if (row) {
       const sel = row.querySelector('.sem-select');
       if (sel) sel.className = 'sem-select' + (semId ? ' assigned' : '');
+      // update planned circle
+      const plannedCircle = row.querySelectorAll('.circle')[2]; // 0=taken,1=progress,2=planned,3=skip
+      if (plannedCircle) plannedCircle.className = 'circle' + (semId ? ' planned' : '');
     }
   }
+  updateStats();
 }
 
 function setView(v) {
@@ -1409,20 +1445,21 @@ function toggleCountProg() {
 
 // All sections, all courses (including noCount) — for 120-cr graduation tracker
 function computeAllTotals() {
-  let taken = 0, inprog = 0;
+  let taken = 0, inprog = 0, planned = 0;
   SECTIONS.forEach(sec => {
     sec.courses.forEach(c => {
       if (ST[c.code] === 'taken') taken += c.cr;
       else if (ST[c.code] === 'progress') inprog += c.cr;
+      else if (PLAN[c.code]) planned += c.cr;
     });
   });
-  return { taken, inprog };
+  return { taken, inprog, planned };
 }
 
 function updateStats() {
   // ── Major tracker (67 cr, noCount excluded) ──
-  const { taken, inprog } = computeTotals();
-  const effective = taken + (COUNT_PROG ? inprog : 0);
+  const { taken, inprog, planned } = computeTotals();
+  const effective = taken + (COUNT_PROG ? inprog + planned : 0);
   const rem = Math.max(0, 67 - effective);
   const pct = Math.min(100, Math.round(effective / 67 * 100));
 
@@ -1432,8 +1469,8 @@ function updateStats() {
   document.getElementById('cd-num').textContent = rem;
 
   // ── Graduation tracker (120 cr, all courses) ──
-  const { taken: takenAll, inprog: inprogAll } = computeAllTotals();
-  const effectiveAll = takenAll + (COUNT_PROG ? inprogAll : 0);
+  const { taken: takenAll, inprog: inprogAll, planned: plannedAll } = computeAllTotals();
+  const effectiveAll = takenAll + (COUNT_PROG ? inprogAll + plannedAll : 0);
   const remAll = Math.max(0, 120 - effectiveAll);
   const pctAll = Math.min(100, Math.round(effectiveAll / 120 * 100));
 
@@ -1446,9 +1483,10 @@ function updateStats() {
   SECTIONS.forEach(sec => {
     const card = document.querySelector(`.section-card[data-sec="${sec.id}"]`);
     if (!card) return;
-    const secTaken = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'taken'    ? c.cr : 0), 0);
-    const secProg  = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'progress' ? c.cr : 0), 0);
-    const secEffective = secTaken + (COUNT_PROG ? secProg : 0);
+    const secTaken   = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'taken'    ? c.cr : 0), 0);
+    const secProg    = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'progress' ? c.cr : 0), 0);
+    const secPlanned = sec.courses.reduce((a, c) => a + (!c.noCount && PLAN[c.code] && ST[c.code] !== 'taken' && ST[c.code] !== 'progress' ? c.cr : 0), 0);
+    const secEffective = secTaken + (COUNT_PROG ? secProg + secPlanned : 0);
     const secTotal = sec.total;
     const secPct   = secTotal ? Math.min(100, Math.round(secEffective / secTotal * 100)) : 0;
     const fill = card.querySelector('.section-progress-bar-fill');
@@ -1465,10 +1503,11 @@ function setStatus(code, newSt) {
 
   const row = document.querySelector(`.course-row[data-code="${CSS.escape(code)}"]`);
   if (row) {
-    const [takenCircle, progCircle, skipCircle] = row.querySelectorAll('.circle');
-    takenCircle.className = 'circle' + (cur === 'taken'    ? ' taken'    : '');
-    progCircle.className  = 'circle' + (cur === 'progress' ? ' progress' : '');
-    skipCircle.className  = 'circle' + (cur === 'skip'     ? ' skip'     : '');
+    const [takenCircle, progCircle, plannedCircle, skipCircle] = row.querySelectorAll('.circle');
+    takenCircle.className   = 'circle' + (cur === 'taken'    ? ' taken'    : '');
+    progCircle.className    = 'circle' + (cur === 'progress' ? ' progress' : '');
+    plannedCircle.className = 'circle' + (PLAN[code]         ? ' planned'  : '');
+    skipCircle.className    = 'circle' + (cur === 'skip'     ? ' skip'     : '');
   }
 
   updateStats();
@@ -1522,9 +1561,10 @@ function renderSections() {
     if (courses.length === 0) return;
     totalMatches += courses.length;
 
-    const secTaken = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'taken'    ? c.cr : 0), 0);
-    const secProg  = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'progress' ? c.cr : 0), 0);
-    const secEffective = secTaken + (COUNT_PROG ? secProg : 0);
+    const secTaken   = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'taken'    ? c.cr : 0), 0);
+    const secProg    = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'progress' ? c.cr : 0), 0);
+    const secPlanned = sec.courses.reduce((a, c) => a + (!c.noCount && PLAN[c.code] && ST[c.code] !== 'taken' && ST[c.code] !== 'progress' ? c.cr : 0), 0);
+    const secEffective = secTaken + (COUNT_PROG ? secProg + secPlanned : 0);
     const secTotal = sec.total;
     const secPct   = secTotal ? Math.min(100, Math.round(secEffective / secTotal * 100)) : 0;
     const secLabel = secTotal ? `${secEffective} / ${secTotal} cr` : 'track items';
@@ -1577,6 +1617,10 @@ function renderSections() {
               <div class="circle${st === 'progress' ? ' progress' : ''}"></div>
               <div class="circle-label">In progress</div>
             </div>
+            <div class="circle-wrap no-click">
+              <div class="circle${PLAN[c.code] ? ' planned' : ''}"></div>
+              <div class="circle-label">Planned</div>
+            </div>
             <div class="circle-wrap" onclick="setStatus('${c.code}','skip')">
               <div class="circle${st === 'skip' ? ' skip' : ''}"></div>
               <div class="circle-label">Not taken</div>
@@ -1609,7 +1653,15 @@ function renderSections() {
   updateStats();
 }
 
-// sync toggle button to loaded state before first render
+function masterReset() {
+  if (!confirm('⚠️ Are you sure you want to reset ALL data? This cannot be undone.')) return;
+  if (!confirm('This will erase every circle, semester assignment, and course detail you have entered. Are you absolutely sure?')) return;
+  if (!confirm('Last chance — click OK to permanently wipe all your planner data.')) return;
+  localStorage.removeItem(LS_KEY);
+  location.reload();
+}
+
+
 const _tog = document.getElementById('prog-toggle');
 if (_tog) {
   _tog.classList.toggle('on', COUNT_PROG);
