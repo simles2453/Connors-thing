@@ -743,6 +743,22 @@
   }
   .desc-btn:hover { border-color: #185FA5; color: #185FA5; }
 
+  /* ── BACKGROUND TEXT CONTRAST FIXES ── */
+  #legend-label { color: #444; }
+  .leg-item { color: #333; }
+  .filter-label { color: #444; }
+  .f-btn { color: #333; background: rgba(255,255,255,0.55); }
+  #search-count { color: #555; }
+  footer { color: #444; }
+
+  @media (prefers-color-scheme: dark) {
+    #legend-label { color: #ccc; }
+    .leg-item { color: #bbb; }
+    .filter-label { color: #ccc; }
+    .f-btn { color: #bbb; }
+    footer { color: #bbb; }
+  }
+
   /* ── FOOTER ── */
   footer {
     text-align: center;
