@@ -792,13 +792,38 @@
 
   .sem-course-row {
     display: flex;
-    align-items: center;
-    padding: 8px 16px;
+    align-items: flex-start;
+    padding: 10px 16px;
     border-top: 1px solid var(--br);
     gap: 10px;
   }
 
   .sem-course-info { flex: 1; min-width: 0; }
+
+  .sem-course-details {
+    display: flex;
+    gap: 6px;
+    margin-top: 5px;
+    flex-wrap: wrap;
+  }
+
+  .sem-info-input {
+    flex: 1;
+    min-width: 80px;
+    max-width: 160px;
+    padding: 3px 7px;
+    border: 1px solid var(--br);
+    border-radius: 5px;
+    background: var(--bg);
+    color: var(--t1);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10.5px;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+
+  .sem-info-input::placeholder { color: var(--t3); }
+  .sem-info-input:focus { border-color: #6b9fd4; }
 
   .sem-course-code {
     font-family: 'DM Mono', monospace;
@@ -1188,13 +1213,14 @@ let SEARCH = '';
 let COUNT_PROG = false;
 let VIEW = 'courses';
 const PLAN = {}; // course code → semester id
+const PLAN_INFO = {}; // course code → { time, location, prof }
 
 // ── LOCALSTORAGE ──────────────────────────────────────────────────────────────
 const LS_KEY = 'luc-planner-v1';
 
 function saveState() {
   try {
-    localStorage.setItem(LS_KEY, JSON.stringify({ ST, collapsed, COUNT_PROG, PLAN }));
+    localStorage.setItem(LS_KEY, JSON.stringify({ ST, collapsed, COUNT_PROG, PLAN, PLAN_INFO }));
   } catch(e) {}
 }
 
@@ -1206,6 +1232,7 @@ function loadState() {
     if (saved.collapsed) Object.assign(collapsed, saved.collapsed);
     if (typeof saved.COUNT_PROG === 'boolean') COUNT_PROG = saved.COUNT_PROG;
     if (saved.PLAN) Object.assign(PLAN, saved.PLAN);
+    if (saved.PLAN_INFO) Object.assign(PLAN_INFO, saved.PLAN_INFO);
   } catch(e) {}
 }
 
@@ -1263,6 +1290,12 @@ function semesterOptionsHtml(currentSemId) {
   ).join('');
 }
 
+function setPlanInfo(code, field, value) {
+  if (!PLAN_INFO[code]) PLAN_INFO[code] = {};
+  PLAN_INFO[code][field] = value;
+  saveState();
+}
+
 function renderPlan() {
   const container = document.getElementById('plan-view');
 
@@ -1288,11 +1321,21 @@ function renderPlan() {
     } else {
       courses.forEach(c => {
         const st = ST[c.code];
+        const info = PLAN_INFO[c.code] || {};
         html += `<div class="sem-course-row">
           <span class="sem-status-dot ${st}"></span>
           <div class="sem-course-info">
             <div class="sem-course-code">${c.code}</div>
             <div class="sem-course-name">${c.name}</div>
+            <div class="sem-course-details">
+              <input class="sem-info-input" type="text" placeholder="⏰ Time" value="${info.time || ''}" onchange="setPlanInfo('${c.code}', 'time', this.value)">
+              <select class="sem-info-input" onchange="setPlanInfo('${c.code}', 'location', this.value)">
+                <option value="">📍 Campus</option>
+                <option value="Lake Shore" ${info.location === 'Lake Shore' ? 'selected' : ''}>Lake Shore</option>
+                <option value="Gold Coast" ${info.location === 'Gold Coast' ? 'selected' : ''}>Gold Coast</option>
+              </select>
+              <input class="sem-info-input" type="text" placeholder="👤 Professor" value="${info.prof || ''}" onchange="setPlanInfo('${c.code}', 'prof', this.value)">
+            </div>
           </div>
           <div class="sem-course-cr">${c.cr}</div>
           <button class="sem-remove" onclick="setSemester('${c.code}', '')" title="Remove from semester">✕</button>
