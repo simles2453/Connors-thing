@@ -540,6 +540,25 @@
     line-height: 1.4;
   }
 
+  .catalog-link {
+    display: inline-block;
+    margin-top: 5px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    border: 1px solid var(--br);
+    background: var(--bg);
+    color: var(--t3);
+    font-size: 10px;
+    font-style: normal;
+    text-decoration: none;
+    transition: border-color 0.15s, color 0.15s;
+  }
+
+  .catalog-link:hover {
+    border-color: #185FA5;
+    color: #185FA5;
+  }
+
   .course-credits {
     text-align: center;
     width: 36px;
@@ -630,6 +649,99 @@
     letter-spacing: 0.02em;
     max-width: 36px;
   }
+
+  /* ── DESCRIPTION POPUP ── */
+  #desc-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 998;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  #desc-overlay.visible { display: flex; }
+
+  #desc-modal {
+    background: var(--surf);
+    border: 1px solid var(--br);
+    border-radius: 12px;
+    padding: 24px;
+    max-width: 480px;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+    position: relative;
+    max-height: 80vh;
+    overflow-y: auto;
+  }
+
+  #desc-modal-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--t3);
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+  }
+
+  #desc-modal-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--t1);
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+
+  #desc-modal-text {
+    font-size: 13px;
+    color: var(--t2);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  #desc-modal-link {
+    display: inline-block;
+    font-size: 11px;
+    color: #185FA5;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(24,95,165,0.3);
+  }
+  #desc-modal-link:hover { border-bottom-color: #185FA5; }
+
+  #desc-close {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: none;
+    background: var(--gdot);
+    color: var(--t2);
+    font-size: 13px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #desc-close:hover { background: var(--t3); color: var(--surf); }
+
+  .desc-btn {
+    display: inline-block;
+    margin-top: 5px;
+    margin-right: 4px;
+    padding: 2px 8px;
+    border-radius: 5px;
+    border: 1px solid var(--br);
+    background: var(--bg);
+    color: var(--t3);
+    font-size: 10px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .desc-btn:hover { border-color: #185FA5; color: #185FA5; }
 
   /* ── FOOTER ── */
   footer {
@@ -910,6 +1022,16 @@
 </style>
 </head>
 <body>
+
+<div id="desc-overlay" onclick="if(event.target===this)hideDesc()">
+  <div id="desc-modal">
+    <button id="desc-close" onclick="hideDesc()">✕</button>
+    <div id="desc-modal-code"></div>
+    <div id="desc-modal-name"></div>
+    <div id="desc-modal-text"></div>
+    <a id="desc-modal-link" href="#" target="_blank" rel="noopener">View in LUC Catalog →</a>
+  </div>
+</div>
 
 <div id="site-header">
   <div id="header-top">
@@ -1210,6 +1332,138 @@ const SECTIONS = [
   }
 ];
 
+// ── COURSE DESCRIPTIONS ───────────────────────────────────────────────────────
+const DESCS = {
+  // Bio Core
+  'BIOL 101': 'Fundamental principles of Biology: scientific method, biological chemistry, cell structure and function, energy transformations, mechanisms of cell communication, cellular reproduction, and genetics.',
+  'BIOL 111': 'Lab complement to General Biology I. Observation, experimentation, and dissection of representative organisms; comparative anatomy and physiology of selected organisms.',
+  'BIOL 102': 'Continuation of BIOL 101. Covers evolutionary theory, general principles of ecology, plant structure and function, and comparative animal physiology.',
+  'BIOL 112': 'Lab complement to General Biology II. Observation, experimentation, and dissection; systematics and comparative anatomy and physiology of selected organisms.',
+  'BIOL 251': 'Molecular and cellular studies of living organisms, emphasizing the relationships between subcellular structures and their biochemical and physiological functions.',
+  'BIOL 252': 'Lab experiences designed to explore relationships between structure and function of subcellular components.',
+  'BIOL 265': 'Relationships of organisms to their environment and to each other at the organism, population, community, and ecosystem levels.',
+  'BIOL 266': 'Lab and field experience illustrating the principles of ecology; collecting, processing, and analyzing data. Field trips required.',
+  'BIOL 282': 'Surveys principles and processes of genetic inheritance, gene expression, molecular biology, developmental, quantitative, population and evolutionary genetics.',
+  'BIOL 283': 'Experiments and demonstrations illustrating chromosomal structures and transmission, molecular biology, gene linkage, gene frequencies and variation.',
+  // Bio Electives 200-level
+  'BIOL 200': 'Introduction to computational approaches in biology. Covers sequence analysis, database searching, and genomic tools applied to biological questions.',
+  'BIOL 201': 'Study of cellular physiology including membrane transport, signal transduction, excitability, and cellular responses to environmental stimuli.',
+  'BIOL 210': 'Survey of vertebrate body plans through comparative dissection. Examines homologous structures across major vertebrate groups and evolutionary relationships.',
+  'BIOL 212': 'Lab complement to Comparative Anatomy. Dissection-based examination of vertebrate organ systems and evolutionary modifications.',
+  'BIOL 215': 'Study of human body systems including cardiovascular, respiratory, renal, and endocrine systems, emphasizing function and homeostasis.',
+  'BIOL 216': 'Lab complement to Human Physiology. Experimental measurement of physiological parameters and organ system function.',
+  'BIOL 220': 'Fundamental concepts of microbial life, physiology, and metabolism. Covers the three domains of life and microbial ecology.',
+  'BIOL 221': 'Lab complement to Microbiology. Techniques in microbial culture, identification, and experimental analysis.',
+  'BIOL 230': 'Field and classroom study of local flora and fauna. Covers identification, ecology, and natural history of organisms in the Chicago region.',
+  'BIOL 240': 'Survey of ocean ecosystems, marine organisms, and oceanographic processes. Examines adaptation, diversity, and conservation of marine life.',
+  'BIOL 253': 'Introduction to statistical methods used in biological research. Topics include probability, experimental design, ANOVA, regression, and data analysis using computers.',
+  'BIOL 254': 'Lab complement to Biostatistics. Hands-on data collection and analysis using statistical software.',
+  'BIOL 260': 'Analysis of evolutionary processes and patterns. Covers population genetics, natural selection, speciation, phylogenetics, and the fossil record.',
+  'BIOL 270': 'Study of animal parasites, their distribution, structure, life cycles, and host relationships. Covers both invertebrate and vertebrate parasites.',
+  'BIOL 271': 'Lab complement to Parasitology. Identification and study of major parasite groups through microscopy and specimen analysis.',
+  'BIOL 280': 'Survey of major insect groups including morphology, metamorphosis, classification, behavior, and ecological roles.',
+  'BIOL 290': 'Ecological study of an area outside the Midwest. Includes field trip to a specific region examining organisms and ecosystems in their natural context.',
+  // Bio Electives 300-level
+  'BIOL 300': 'Independent research in an active biology lab under faculty supervision. Students design experiments, collect data, and present findings.',
+  'BIOL 301': 'Advanced topics in cell biology including signal transduction, cytoskeleton dynamics, cell cycle regulation, and modern cell biological techniques.',
+  'BIOL 302': 'Advanced study of molecular biological processes: DNA replication, transcription, translation, gene regulation, and genome organization.',
+  'BIOL 303': 'Analysis of developmental processes including fertilization, embryonic cleavage, cell determination and differentiation. Emphasis on molecular and cellular control mechanisms.',
+  'BIOL 304': 'Lab complement to Developmental Biology. Experimental techniques used in developmental biology research.',
+  'BIOL 305': 'Lab complement to Molecular Biology. Modern techniques in molecular cloning, PCR, gel electrophoresis, and DNA analysis.',
+  'BIOL 310': 'Advanced study of nervous system structure and function. Covers electrophysiology, sensory and motor systems, and neural integration.',
+  'BIOL 311': 'Lab complement to Neurobiology. Experimental techniques in electrophysiology and neural recording.',
+  'BIOL 315': 'Study of endocrine system physiology. Covers hormonal signaling, feedback regulation, and the role of hormones in development and homeostasis.',
+  'BIOL 318': 'Examines microscopic anatomy of the four basic tissue types and their arrangement in major vertebrate organ systems.',
+  'BIOL 319': 'Lab complement to Histology. Microscopic identification of tissue types and organ systems.',
+  'BIOL 320': 'Study of the nature and molecular basis of immune responses. Covers immune recognition, tolerance, immunological diseases, and modern immunological techniques.',
+  'BIOL 321': 'Lab complement to Immunology. Experimental techniques in immunology including antibody-antigen reactions and cellular assays.',
+  'BIOL 325': 'Examines the molecular and cellular basis of cancer, including oncogenes, tumor suppressors, cell signaling, and therapeutic strategies.',
+  'BIOL 330': 'Examines the biological basis of animal behavior including function, evolution, mechanisms, and adaptive significance of behaviors across species.',
+  'BIOL 335': 'Systematics, phylogeny, anatomy, physiology, behavior, and ecology of vertebrates. Covers fish through mammals with emphasis on evolutionary relationships.',
+  'BIOL 336': 'Lab complement to Vertebrate Zoology. Specimen identification and dissection of representative vertebrate groups.',
+  'BIOL 340': 'Comprehensive survey of plant biology covering plant cell structure, development, physiology, reproduction, and ecology.',
+  'BIOL 341': 'Lab complement to Plant Biology. Experimental techniques in plant biology including growth, photosynthesis, and reproduction.',
+  'BIOL 345': 'Introduction to the ecology of lake and stream ecosystems, integrating physical, chemical, and biological parameters. Includes field trips.',
+  'BIOL 350': 'Explores species diversity, natural and human-induced extinctions, environmental ethics, and conservation strategies at population, community, and ecosystem levels.',
+  'BIOL 355': 'Examines the role of infectious disease in ecological communities. Topics include host-pathogen dynamics, disease transmission, and epidemiology in natural populations.',
+  'BIOL 360': 'Introduction to biochemical principles including metabolism, thermodynamics, enzyme kinetics, and major biochemical pathways.',
+  'BIOL 361': 'Lab complement to Biochemistry. Techniques in biochemical analysis including enzyme assays, protein purification, and spectrophotometry.',
+  'BIOL 365': 'Covers molecular details of genetic processes: DNA replication, RNA and protein synthesis, gene regulation, and genome organization.',
+  'BIOL 370': 'Applications of computational tools and databases to genetics, genomics, and evolutionary biology. Introduction to scripting for biological data analysis.',
+  'BIOL 375': 'Fundamental principles of population, ecological, and evolutionary genetics, including molecular evolution and genetic structure of populations.',
+  'BIOL 377': 'Special topics course in biology. Topic varies by semester — see department for current offering.',
+  'BIOL 380': 'Examines stem cell types, early discoveries in the field, potential therapeutic uses, and ethical implications of stem cell research.',
+  'BIOL 385': 'Covers the molecular details of viral infection, replication strategies, and immune evasion. Focus on mammalian viruses of biomedical relevance.',
+  'BIOL 390': 'Capstone seminar for senior biology majors. Discussion of current research, career paths, and professional development in the biological sciences.',
+  'BIOL 394': 'Special topics lab course. Experimental component tied to a specific topic in biology. Topic varies by semester.',
+  'BIOL 395': 'Special topics seminar in biology. In-depth discussion of a focused area of biological research. Topic varies by semester.',
+  'BIOL 397': 'Independent research project under faculty supervision. Students carry out an original research question with increasing independence.',
+  // Chemistry
+  'CHEM 160': 'Introduces atomic structure, chemical bonding, molecular geometry, intermolecular forces, thermochemistry, and gas laws. First course in the chemistry sequence.',
+  'CHEM 161': 'Lab complement to CHEM 160. Experimental techniques in chemical measurement, synthesis, and analysis.',
+  'CHEM 180': 'First semester organic chemistry. Covers molecular structure, bonding, stereochemistry, reaction mechanisms, and functional group transformations.',
+  'CHEM 181': 'Lab complement to CHEM 180. Techniques in organic synthesis, purification, and spectroscopic characterization.',
+  'CHEM 240': 'Continuation of CHEM 180. Covers carbonyl chemistry, aromatic systems, amines, and biomolecules.',
+  'CHEM 241': 'Lab complement to CHEM 240. Advanced organic synthesis, multi-step reactions, and spectroscopic identification.',
+  'CHEM 260': 'Quantitative chemical analysis: titrimetry, electrochemistry, spectrophotometry, and chromatography. Statistical analysis of analytical data.',
+  'CHEM 261': 'Lab complement to CHEM 260. Practical application of quantitative analytical methods and instrumentation.',
+  'CHEM 300': 'Undergraduate research in an active chemistry lab. Students conduct independent experiments under faculty mentorship.',
+  'CHEM 300E': 'Continuation of undergraduate research. Extended independent project with faculty mentor in the chemistry department.',
+  'CHEM 285': 'Advanced analytical chemistry covering modern instrumental methods, separation techniques, and analytical method development.',
+  'CHEM 286': 'Lab complement to Analytical Chemistry. Hands-on use of modern analytical instrumentation.',
+  'CHEM 310': 'Quantum mechanics, thermodynamics, and kinetics applied to chemical systems. Mathematical treatment of chemical phenomena.',
+  'CHEM 311': 'Lab complement to Physical Chemistry I. Experimental measurement of thermodynamic and kinetic quantities.',
+  'CHEM 320': 'Continuation of Physical Chemistry I. Statistical mechanics, spectroscopy, and quantum chemistry.',
+  'CHEM 350': 'Introduction to biochemical principles: proteins, enzymes, carbohydrates, lipids, nucleic acids, metabolism, and bioenergetics.',
+  'CHEM 351': 'Lab complement to Biochemistry I. Techniques in protein purification, enzyme kinetics, and biochemical analysis.',
+  'CHEM 352': 'Continuation of Biochemistry I. Advanced topics in metabolic regulation, signal transduction, and molecular biology.',
+  'CHEM 360': 'Structure, bonding, and reactivity of inorganic compounds. Covers coordination chemistry, organometallics, and bioinorganic applications.',
+  'CHEM 380': 'Theory and application of spectroscopic techniques including NMR, IR, UV-Vis, and mass spectrometry for structural determination.',
+  // Math
+  'MATH 117': 'Prerequisite for calculus. Covers polynomial, rational, exponential, and logarithmic functions, graphing, and equation solving.',
+  'MATH 118': 'Continuation of Precalculus I. Trigonometric functions, identities, equations, vectors, and analytic geometry.',
+  'MATH 131': 'Introduction to differential and integral calculus with applications to biology and social sciences. Covers limits, derivatives, and integrals.',
+  'MATH 132': 'Continuation of Applied Calculus I. Integration techniques, differential equations, and multivariable calculus with applications.',
+  'MATH 161': 'Calculus for science and engineering majors. Limits, derivatives, related rates, optimization, and integration.',
+  'MATH 162': 'Continuation of Calculus I. Techniques of integration, infinite series, and applications.',
+  'MATH 201': 'Systems of linear equations, matrices, determinants, vector spaces, linear transformations, and eigenvalues.',
+  'MATH 212': 'Descriptive statistics, probability, distributions, estimation, hypothesis testing, regression, and analysis of variance.',
+  'MATH 263': 'Functions of several variables, partial derivatives, multiple integrals, and vector calculus.',
+  // Physics
+  'PHYS 111': 'Algebra-based introductory physics. Covers mechanics, kinematics, Newton\'s laws, energy, momentum, and rotational motion.',
+  'PHYS 111L': 'Lab complement to Physics I. Experimental verification of mechanics principles; error analysis and scientific reporting.',
+  'PHYS 112': 'Continuation of Physics I. Covers electricity, magnetism, waves, sound, and optics.',
+  'PHYS 112L': 'Lab complement to Physics II. Experiments in electricity, magnetism, and optics.',
+  'PHYS 121': 'Calculus-based Physics I. Mechanics, kinematics, Newton\'s laws, energy, and momentum for science and engineering students.',
+  'PHYS 122': 'Continuation of calculus-based Physics I. Electricity, magnetism, waves, and optics.',
+  'PHYS 125': 'Algebra-based physics for life science students. Covers mechanics with emphasis on biological applications.',
+  'PHYS 126': 'Continuation of Physics for Life Sciences I. Electricity, magnetism, and optics with biological applications.',
+  // Univ Core
+  'UNIV 101': 'First-Year Experience introducing students to Loyola\'s academic community, Jesuit educational values, campus resources, and strategies for academic success.',
+  'UCWR 110': 'First Writing Intensive course. Develops critical reading, research, argumentation, and academic writing skills through inquiry-based assignments.',
+  'THEO 107': 'Introduction to theological study and Christian faith in historical and cultural contexts. First of two required theology courses at LUC.',
+  'SOCL 101': 'Introduction to sociological thinking: social structures, institutions, inequality, culture, and how society shapes individual experience.',
+  'PSYC 101': 'Survey of psychology: biological bases, perception, learning, memory, development, personality, abnormal psychology, and social behavior.',
+  'PHIL 181': 'Introduction to ethics and moral philosophy. Examines major ethical theories — consequentialism, deontology, virtue ethics — and applies them to contemporary issues.',
+  'THEO 2XX': 'Second required theology course at LUC. Builds on THEO 107 to explore theological topics in greater depth.',
+};
+
+function showDesc(code, name) {
+  const desc = DESCS[code];
+  const url = catalogUrl(code);
+  document.getElementById('desc-modal-code').textContent = code;
+  document.getElementById('desc-modal-name').textContent = name;
+  document.getElementById('desc-modal-text').textContent = desc || 'See the LUC catalog for the full course description.';
+  const link = document.getElementById('desc-modal-link');
+  if (url) { link.href = url; link.style.display = 'inline-block'; }
+  else { link.style.display = 'none'; }
+  document.getElementById('desc-overlay').classList.add('visible');
+}
+
+function hideDesc() {
+  document.getElementById('desc-overlay').classList.remove('visible');
+}
+
 // ── SEMESTERS ─────────────────────────────────────────────────────────────────
 const SEMESTERS = [
   { id:'sum-26',   label:'Summer 2026',  color:'#2ca882' },
@@ -1274,6 +1528,15 @@ function tagClass(t) {
   if (t === 'lab') return 'lab';
   if (t === '300-level') return 'level300';
   return 'other';
+}
+
+function catalogUrl(code) {
+  const parts = code.split(' ');
+  const dept = parts[0].toLowerCase();
+  const num = parts[1] || '';
+  const noCatalog = ['fine', 'cult', 'wi', 'engaged', 'lang'];
+  if (noCatalog.includes(dept)) return null;
+  return `https://catalog.luc.edu/course-descriptions/${dept}/#:~:text=${encodeURIComponent(dept.toUpperCase() + ' ' + num)}`;
 }
 
 // All sections count toward the credit totals displayed in the header
@@ -1599,6 +1862,7 @@ function renderSections() {
             <div class="course-name">${dispName}</div>
             ${(tagsHtml || gradeHtml) ? `<div class="tags">${gradeHtml}${tagsHtml}</div>` : ''}
             ${c.prereq ? `<div class="course-prereq">Prereq: ${c.prereq}</div>` : ''}
+            <button class="desc-btn" onclick="showDesc('${c.code}', '${c.name.replace(/'/g,"\\'")}')">📖 About this course</button>
             <select class="sem-select${PLAN[c.code] ? ' assigned' : ''}" onchange="setSemester('${c.code}', this.value)">
               <option value="">+ Add to semester</option>
               ${semesterOptionsHtml(PLAN[c.code] || '')}
