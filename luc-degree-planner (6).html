@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Biology BS — Degree Planner · LUC</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #f5f4f0;
+    --surf: #ffffff;
+    --br: rgba(0,0,0,0.09);
+    --t1: #1a1a1a;
+    --t2: #555555;
+    --t3: #999999;
+    --green: #3B6D11;
+    --green-l: #EAF3DE;
+    --green-m: #639922;
+    --amber: #BA7517;
+    --amber-l: #FAEEDA;
+    --amber-d: #854F0B;
+    --rose: #B93232;
+    --rose-l: #FAEAEA;
+    --rose-d: #7D1F1F;
+    --gdot: #d0d0d0;
+    --teal-l: #E1F5EE;
+    --teal-d: #085041;
+    --pur-l: #EEEDFE;
+    --pur-d: #26215C;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+    --shadow-md: 0 2px 8px rgba(0,0,0,0.08), 0 8px 24px rgba(0,0,0,0.06);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #121212;
+      --surf: #1d1d1d;
+      --br: rgba(255,255,255,0.08);
+      --t1: #f0f0f0;
+      --t2: #aaaaaa;
+      --t3: #666666;
+      --green-l: #1e2f10;
+      --amber-l: #2a1f08;
+      --rose-l: #2e1010;
+      --gdot: #3a3a3a;
+      --teal-l: #0a201a;
+      --teal-d: #6ECFB5;
+      --pur-l: #1a1830;
+      --pur-d: #A9A4F5;
+      --shadow: 0 1px 3px rgba(0,0,0,0.3), 0 4px 12px rgba(0,0,0,0.2);
+      --shadow-md: 0 2px 8px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg);
+    color: var(--t1);
+    min-height: 100vh;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  /* ── STICKY HEADER ── */
+  #site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--surf);
+    border-bottom: 1px solid var(--br);
+    box-shadow: var(--shadow);
+  }
+
+  #header-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 24px 10px;
+    border-bottom: 1px solid var(--br);
+  }
+
+  #luc-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  #luc-crest {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, #8B1A1A 0%, #6B0F0F 100%);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: #e8c97e;
+    letter-spacing: 0;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+  }
+
+  #luc-wordmark {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+  }
+  #luc-wordmark span:first-child {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #8B1A1A;
+    letter-spacing: 0.02em;
+  }
+  #luc-wordmark span:last-child {
+    font-size: 10px;
+    color: var(--t3);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  #header-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--br);
+    flex-shrink: 0;
+  }
+
+  #header-titles {
+    flex: 1;
+    min-width: 0;
+  }
+  #page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--t1);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  #page-subtitle {
+    font-size: 11px;
+    color: var(--t3);
+    font-weight: 400;
+    margin-top: 1px;
+  }
+
+  /* ── COUNTDOWN BAR ── */
+  #countdown-bar {
+    padding: 10px 24px 12px;
+    display: flex;
+    gap: 0;
+  }
+
+  .tracker {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .tracker + .tracker {
+    border-left: 1px solid var(--br);
+    padding-left: 20px;
+    margin-left: 4px;
+  }
+
+  .tracker-bars {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .tracker-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--t3);
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+
+  #bar-track, #bar-track-2 {
+    height: 7px;
+    background: var(--gdot);
+    border-radius: 99px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+
+  #cd-bar {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--green) 0%, #2ca882 100%);
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-width: 0;
+  }
+
+  #cd-bar-2 {
+    height: 100%;
+    border-radius: 99px;
+    background: linear-gradient(90deg, #185FA5 0%, #534AB7 100%);
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    min-width: 0;
+  }
+
+  #bar-stats, #bar-stats-2 {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .bar-stat {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    color: var(--t2);
+    white-space: nowrap;
+  }
+
+  .bar-stat-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .bar-stat-dot.green { background: var(--green); }
+  .bar-stat-dot.amber { background: var(--amber); }
+  .bar-stat-dot.gray { background: var(--gdot); }
+
+  .bar-stat strong { font-weight: 600; color: var(--t1); }
+
+  #prog-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px 2px 6px;
+    border-radius: 99px;
+    border: 1px solid var(--br);
+    background: transparent;
+    color: var(--t3);
+    font-size: 10px;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    margin-left: 4px;
+    vertical-align: middle;
+  }
+
+  #prog-toggle:hover { border-color: var(--amber); color: var(--amber); }
+
+  #prog-toggle.on {
+    background: var(--amber-l);
+    border-color: var(--amber);
+    color: var(--amber-d);
+  }
+
+  #prog-toggle-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+
+  .tracker-right {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .cd-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--t1);
+    line-height: 1;
+    transition: all 0.3s ease;
+  }
+
+  .cd-label {
+    font-size: 9px;
+    color: var(--t3);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  /* ── MAIN CONTENT ── */
+  #main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 20px 20px 60px;
+  }
+
+  /* ── LEGEND ── */
+  #legend {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 0 2px;
+    flex-wrap: wrap;
+  }
+
+  #legend-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--t3);
+    font-weight: 600;
+  }
+
+  .leg-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: var(--t2);
+  }
+
+  .leg-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .leg-dot.green { background: var(--green); }
+  .leg-dot.amber { background: var(--amber); }
+  .leg-dot.rose  { background: var(--rose); }
+
+  /* ── FILTER ROWS ── */
+  .filter-row {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+  }
+
+  .filter-row:last-of-type { margin-bottom: 20px; }
+
+  .filter-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--t3);
+    font-weight: 600;
+    align-self: center;
+    margin-right: 2px;
+    white-space: nowrap;
+  }
+
+  .f-btn {
+    padding: 4px 11px;
+    border-radius: 99px;
+    border: 1px solid var(--br);
+    background: transparent;
+    color: var(--t2);
+    font-size: 11.5px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .f-btn:hover { border-color: var(--t3); color: var(--t1); }
+
+  .f-btn.active {
+    background: var(--t1);
+    border-color: var(--t1);
+    color: var(--surf);
+  }
+
+  /* ── SECTIONS ── */
+  #sections {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-card {
+    background: var(--surf);
+    border: 1px solid var(--br);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.12s;
+  }
+
+  .section-header:hover { background: rgba(0,0,0,0.025); }
+  @media (prefers-color-scheme: dark) {
+    .section-header:hover { background: rgba(255,255,255,0.03); }
+  }
+
+  .chevron {
+    font-size: 11px;
+    color: var(--t3);
+    transition: transform 0.22s ease;
+    flex-shrink: 0;
+    margin-right: 2px;
+  }
+
+  .chevron.collapsed { transform: rotate(-90deg); }
+
+  .section-title {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    flex: 1;
+    min-width: 0;
+    color: var(--t1);
+  }
+
+  .section-cr {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--t3);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .section-progress-bar {
+    height: 3px;
+    width: 100%;
+    position: relative;
+  }
+
+  .section-progress-bar-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--br);
+  }
+
+  .section-progress-bar-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    transition: width 0.4s ease;
+  }
+
+  .section-note {
+    margin: 10px 14px 2px;
+    padding: 8px 12px;
+    border: 1.5px dashed var(--br);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--t3);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .section-body { padding-bottom: 4px; }
+
+  /* ── COURSE ROW ── */
+  .course-row {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px 10px 16px;
+    border-top: 1px solid var(--br);
+    gap: 12px;
+    transition: background 0.12s;
+  }
+
+  .course-row:hover { background: rgba(0,0,0,0.015); }
+  @media (prefers-color-scheme: dark) {
+    .course-row:hover { background: rgba(255,255,255,0.02); }
+  }
+
+  .course-info { flex: 1; min-width: 0; }
+
+  .course-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--t1);
+    letter-spacing: 0.04em;
+  }
+
+  .course-name {
+    font-size: 12.5px;
+    color: var(--t2);
+    margin-top: 1px;
+    line-height: 1.35;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 1px 7px;
+    border-radius: 99px;
+    font-size: 9.5px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    line-height: 1.6;
+  }
+
+  .tag.lab { background: var(--teal-l); color: var(--teal-d); }
+  .tag.level300 { background: var(--pur-l); color: var(--pur-d); }
+  .tag.other {
+    background: var(--bg);
+    color: var(--t3);
+    border: 1px solid var(--br);
+  }
+
+  .course-prereq {
+    font-size: 10px;
+    color: var(--t3);
+    font-style: italic;
+    margin-top: 4px;
+    line-height: 1.4;
+  }
+
+  .course-credits {
+    text-align: center;
+    width: 36px;
+    flex-shrink: 0;
+  }
+
+  .cr-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--t1);
+    line-height: 1;
+  }
+
+  .cr-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--t3);
+    margin-top: 1px;
+    font-weight: 500;
+  }
+
+  .course-circles {
+    display: flex;
+    gap: 20px;
+    flex-shrink: 0;
+    align-items: flex-start;
+  }
+
+  .circle-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+  }
+
+  .circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--gdot);
+    border: 2px solid transparent;
+    transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    flex-shrink: 0;
+  }
+
+  .circle.taken {
+    background: var(--green);
+    border-color: var(--green-m);
+    box-shadow: 0 0 0 3px var(--green-l);
+  }
+
+  .circle.progress {
+    background: var(--amber);
+    border-color: var(--amber-d);
+    box-shadow: 0 0 0 3px var(--amber-l);
+  }
+
+  .circle.skip {
+    background: var(--gdot);
+    border-color: var(--t3);
+    box-shadow: 0 0 0 3px var(--br);
+  }
+
+  .circle-label {
+    font-size: 8.5px;
+    color: var(--t3);
+    text-align: center;
+    line-height: 1.25;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    max-width: 36px;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 24px;
+    color: var(--t3);
+    font-size: 11px;
+    line-height: 1.6;
+    border-top: 1px solid var(--br);
+    margin-top: 20px;
+  }
+
+  /* ── SEARCH ── */
+  #search-wrap {
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  #search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--t3);
+    font-size: 13px;
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  #search-input {
+    width: 100%;
+    padding: 9px 36px 9px 34px;
+    border: 1px solid var(--br);
+    border-radius: 8px;
+    background: var(--surf);
+    color: var(--t1);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-shadow: var(--shadow);
+  }
+
+  #search-input::placeholder { color: var(--t3); }
+
+  #search-input:focus {
+    border-color: #6b9fd4;
+    box-shadow: 0 0 0 3px rgba(107,159,212,0.18);
+  }
+
+  #search-clear {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--gdot);
+    border: none;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--t2);
+    font-size: 11px;
+    line-height: 1;
+    transition: background 0.12s;
+  }
+
+  #search-clear:hover { background: var(--t3); color: var(--surf); }
+  #search-clear.visible { display: flex; }
+
+  #search-count {
+    font-size: 11px;
+    color: var(--t3);
+    margin-top: -14px;
+    margin-bottom: 16px;
+    padding-left: 2px;
+    min-height: 16px;
+  }
+
+  .highlight {
+    background: #fff176;
+    color: #1a1a1a;
+    border-radius: 2px;
+    padding: 0 1px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .highlight { background: #7a6a00; color: #f0f0f0; }
+  }
+
+  #no-results {
+    text-align: center;
+    padding: 48px 24px;
+    color: var(--t3);
+    font-size: 13px;
+  }
+
+  #no-results strong { display: block; font-size: 16px; margin-bottom: 6px; color: var(--t2); }
+
+  /* ── SEMESTER SELECTOR ── */
+  .sem-select {
+    margin-top: 5px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    border: 1px solid var(--br);
+    background: var(--bg);
+    color: var(--t3);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    max-width: 140px;
+    transition: border-color 0.15s, color 0.15s;
+    appearance: auto;
+  }
+
+  .sem-select:hover { border-color: var(--t3); color: var(--t1); }
+  .sem-select.assigned { color: var(--t1); border-color: var(--t2); font-weight: 600; }
+
+  /* ── VIEW TOGGLE ── */
+  #view-toggle-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  /* ── PLAN VIEW ── */
+  #plan-view {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sem-card {
+    background: var(--surf);
+    border: 1px solid var(--br);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+
+  .sem-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--br);
+  }
+
+  .sem-card-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sem-card-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    flex: 1;
+    color: var(--t1);
+  }
+
+  .sem-card-cr {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--t3);
+  }
+
+  .sem-course-row {
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    border-top: 1px solid var(--br);
+    gap: 10px;
+  }
+
+  .sem-course-info { flex: 1; min-width: 0; }
+
+  .sem-course-code {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--t2);
+  }
+
+  .sem-course-name {
+    font-size: 12px;
+    color: var(--t1);
+  }
+
+  .sem-course-cr {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--t1);
+    width: 28px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+
+  .sem-remove {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: none;
+    background: var(--gdot);
+    color: var(--t3);
+    font-size: 11px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.12s;
+  }
+
+  .sem-remove:hover { background: var(--rose); color: #fff; }
+
+  .sem-empty {
+    padding: 16px;
+    text-align: center;
+    color: var(--t3);
+    font-size: 11px;
+    font-style: italic;
+  }
+
+  .sem-status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .sem-status-dot.taken    { background: var(--green); }
+  .sem-status-dot.progress { background: var(--amber); }
+  .sem-status-dot.none     { background: var(--gdot); }
+  .sem-status-dot.skip     { background: var(--gdot); }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-card {
+    animation: fadeIn 0.25s ease both;
+  }
+</style>
+</head>
+<body>
+
+<div id="site-header">
+  <div id="header-top">
+    <div id="luc-badge">
+      <div id="luc-crest">L</div>
+      <div id="luc-wordmark">
+        <span>Loyola University</span>
+        <span>Chicago</span>
+      </div>
+    </div>
+    <div id="header-divider"></div>
+    <div id="header-titles">
+      <div id="page-title">Biology BS — Degree Planner</div>
+      <div id="page-subtitle">Connor · Class of 2028 · Rogers Park Campus</div>
+    </div>
+  </div>
+
+  <div id="countdown-bar">
+    <div class="tracker">
+      <div class="tracker-bars">
+        <div class="tracker-label">Major Requirements</div>
+        <div id="bar-track"><div id="cd-bar" style="width:0%"></div></div>
+        <div id="bar-stats">
+          <span class="bar-stat"><span class="bar-stat-dot green"></span>Taken <strong id="s-done">0</strong> cr</span>
+          <span class="bar-stat"><span class="bar-stat-dot amber"></span>In progress <strong id="s-prog">0</strong> cr
+            <button id="prog-toggle" onclick="toggleCountProg()" title="Toggle whether in-progress credits count toward remaining">
+              <span id="prog-toggle-dot"></span><span id="prog-toggle-label">count planned</span>
+            </button>
+          </span>
+          <span class="bar-stat"><span class="bar-stat-dot gray"></span>Required <strong>67</strong> cr</span>
+        </div>
+      </div>
+      <div class="tracker-right">
+        <div class="cd-num" id="cd-num">67</div>
+        <div class="cd-label">major cr left</div>
+      </div>
+    </div>
+
+    <div class="tracker">
+      <div class="tracker-bars">
+        <div class="tracker-label">Graduation (120 cr total)</div>
+        <div id="bar-track-2"><div id="cd-bar-2" style="width:0%"></div></div>
+        <div id="bar-stats-2">
+          <span class="bar-stat"><span class="bar-stat-dot green"></span>Taken <strong id="s-done-2">0</strong> cr</span>
+          <span class="bar-stat"><span class="bar-stat-dot amber"></span>In progress <strong id="s-prog-2">0</strong> cr</span>
+          <span class="bar-stat"><span class="bar-stat-dot gray"></span>Required <strong>120</strong> cr</span>
+        </div>
+      </div>
+      <div class="tracker-right">
+        <div class="cd-num" id="cd-num-2">120</div>
+        <div class="cd-label">total cr left</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="main">
+  <div id="legend">
+    <span id="legend-label">Legend</span>
+    <span class="leg-item"><span class="leg-dot green"></span>Taken</span>
+    <span class="leg-item"><span class="leg-dot amber"></span>In progress</span>
+    <span class="leg-item"><span class="leg-dot gray"></span>Not taken</span>
+  </div>
+
+  <div class="filter-row">
+    <span class="filter-label">Category</span>
+    <button class="f-btn active" onclick="setCat('all')">All courses</button>
+    <button class="f-btn" onclick="setCat('bio-core')">Bio core</button>
+    <button class="f-btn" onclick="setCat('bio-elec')">Bio electives</button>
+    <button class="f-btn" onclick="setCat('chem')">Chemistry</button>
+    <button class="f-btn" onclick="setCat('math')">Math</button>
+    <button class="f-btn" onclick="setCat('phys')">Physics</button>
+    <button class="f-btn" onclick="setCat('core')">Univ core</button>
+  </div>
+
+  <div class="filter-row">
+    <span class="filter-label">Status</span>
+    <button class="f-btn active" onclick="setStatus2('all')">All</button>
+    <button class="f-btn" onclick="setStatus2('progress')">In progress</button>
+    <button class="f-btn" onclick="setStatus2('taken')">Completed</button>
+  </div>
+
+  <div id="view-toggle-row">
+    <span class="filter-label">View</span>
+    <button class="f-btn active" id="view-btn-courses" onclick="setView('courses')">Courses</button>
+    <button class="f-btn" id="view-btn-plan" onclick="setView('plan')">📅 Semester Plan</button>
+  </div>
+
+  <div id="search-wrap">
+    <span id="search-icon">⌕</span>
+    <input id="search-input" type="text" placeholder="Search courses by code or name…" oninput="onSearch(this.value)" autocomplete="off" spellcheck="false">
+    <button id="search-clear" onclick="clearSearch()" title="Clear search">✕</button>
+  </div>
+  <div id="search-count"></div>
+
+  <div id="sections"></div>
+  <div id="plan-view" style="display:none"></div>
+</div>
+
+<footer>
+  Prerequisites shown are approximate — confirm all requirements with your academic advisor and the LUC registrar before enrolling.<br>
+  Biology BS requires 67 major credits. Univ Core and elective credits are tracked separately from the 67-credit major total.
+</footer>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────────────
+
+const SECTIONS = [
+  {
+    id: 'bio-core',
+    cat: 'bio-core',
+    title: 'Required Biology Core',
+    color: '#3B6D11',
+    total: 18,
+    note: null,
+    courses: [
+      { code:'BIOL 101', name:'Introductory Biology I', cr:3, s:'taken', grade:'B+', tags:[], prereq:'None' },
+      { code:'BIOL 111', name:'Intro Biology I Lab', cr:1, s:'taken', grade:'B−', tags:['lab'], prereq:'Concurrent w/ BIOL 101' },
+      { code:'BIOL 102', name:'Introductory Biology II', cr:3, s:'progress', tags:[], prereq:'BIOL 101' },
+      { code:'BIOL 112', name:'Intro Biology II Lab', cr:1, s:'progress', tags:['lab'], prereq:'Concurrent w/ BIOL 102' },
+      { code:'BIOL 251', name:'Cell Biology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 265', name:'Ecology', cr:3, s:'none', tags:[], prereq:'BIOL 101' },
+      { code:'BIOL 282', name:'Genetics', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 252', name:'Cell Biology Lab', cr:1, s:'none', tags:['lab','Choose one'], prereq:'Concurrent w/ BIOL 251' },
+      { code:'BIOL 266', name:'Ecology Lab', cr:1, s:'none', tags:['lab','Choose one'], prereq:'Concurrent w/ BIOL 265' },
+      { code:'BIOL 283', name:'Genetics Lab', cr:1, s:'progress', tags:['lab','Choose one'], prereq:'Concurrent w/ BIOL 282' },
+    ]
+  },
+  {
+    id: 'bio-elec',
+    cat: 'bio-elec',
+    title: 'Biology Electives',
+    color: '#1D9E75',
+    total: 19,
+    note: '19 cr required; ≥9 cr must be at the 300-level; ≥2 courses with a lab component.',
+    courses: [
+      // 200-level
+      { code:'BIOL 200', name:'Bioinformatics', cr:3, s:'none', tags:[], prereq:'BIOL 101' },
+      { code:'BIOL 201', name:'Cell Physiology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 210', name:'Comparative Anatomy', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 212', name:'Comparative Anatomy Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ BIOL 210' },
+      { code:'BIOL 215', name:'Human Physiology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 216', name:'Human Physiology Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ BIOL 215' },
+      { code:'BIOL 220', name:'Microbiology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 221', name:'Microbiology Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ BIOL 220' },
+      { code:'BIOL 230', name:'Natural History', cr:3, s:'none', tags:[], prereq:'BIOL 101' },
+      { code:'BIOL 240', name:'Marine Biology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 253', name:'Biostatistics', cr:3, s:'none', tags:[], prereq:'MATH 117' },
+      { code:'BIOL 254', name:'Biostatistics Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ BIOL 253' },
+      { code:'BIOL 260', name:'Evolutionary Biology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 270', name:'Parasitology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 271', name:'Parasitology Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ BIOL 270' },
+      { code:'BIOL 280', name:'Entomology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      { code:'BIOL 290', name:'Field Biology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
+      // 300-level
+      { code:'BIOL 300', name:'Research (variable cr)', cr:1, s:'none', tags:['300-level'], prereq:'Instructor permission' },
+      { code:'BIOL 301', name:'Advanced Cell Biology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 302', name:'Molecular Biology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 303', name:'Developmental Biology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 304', name:'Developmental Biology Lab', cr:1, s:'none', tags:['300-level','lab'], prereq:'Concurrent w/ BIOL 303' },
+      { code:'BIOL 305', name:'Molecular Biology Lab', cr:1, s:'none', tags:['300-level','lab'], prereq:'Concurrent w/ BIOL 302' },
+      { code:'BIOL 310', name:'Neurobiology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 311', name:'Neurobiology Lab', cr:1, s:'none', tags:['300-level','lab'], prereq:'Concurrent w/ BIOL 310' },
+      { code:'BIOL 315', name:'Endocrinology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 318', name:'Histology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 319', name:'Histology Lab', cr:1, s:'none', tags:['300-level','lab'], prereq:'Concurrent w/ BIOL 318' },
+      { code:'BIOL 320', name:'Immunology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 321', name:'Immunology Lab', cr:1, s:'none', tags:['300-level','lab'], prereq:'Concurrent w/ BIOL 320' },
+      { code:'BIOL 325', name:'Cancer Biology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 330', name:'Animal Behavior', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 335', name:'Vertebrate Zoology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 336', name:'Vertebrate Zoology Lab', cr:1, s:'none', tags:['300-level','lab'], prereq:'Concurrent w/ BIOL 335' },
+      { code:'BIOL 340', name:'Plant Biology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 341', name:'Plant Biology Lab', cr:1, s:'none', tags:['300-level','lab'], prereq:'Concurrent w/ BIOL 340' },
+      { code:'BIOL 345', name:'Aquatic Biology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 350', name:'Conservation Biology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 355', name:'Ecology of Infectious Disease', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 265' },
+      { code:'BIOL 360', name:'Biochemistry', cr:3, s:'none', tags:['300-level'], prereq:'CHEM 240' },
+      { code:'BIOL 361', name:'Biochemistry Lab', cr:1, s:'none', tags:['300-level','lab'], prereq:'Concurrent w/ BIOL 360' },
+      { code:'BIOL 365', name:'Molecular Genetics', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 282' },
+      { code:'BIOL 370', name:'Bioinformatics', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 375', name:'Population Genetics', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 282' },
+      { code:'BIOL 377', name:'Special Topics (repeatable)', cr:3, s:'none', tags:['300-level'], prereq:'Varies' },
+      { code:'BIOL 380', name:'Stem Cell Biology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 385', name:'Virology', cr:3, s:'none', tags:['300-level'], prereq:'BIOL 251' },
+      { code:'BIOL 390', name:'Senior Seminar', cr:1, s:'none', tags:['300-level'], prereq:'Senior standing' },
+      { code:'BIOL 394', name:'Special Topics Lab (repeatable)', cr:1, s:'none', tags:['300-level','lab'], prereq:'Varies' },
+      { code:'BIOL 395', name:'Special Topics Seminar (repeatable)', cr:1, s:'none', tags:['300-level'], prereq:'Varies' },
+      { code:'BIOL 397', name:'Independent Research (repeatable)', cr:1, s:'none', tags:['300-level'], prereq:'Instructor permission' },
+    ]
+  },
+  {
+    id: 'chem',
+    cat: 'chem',
+    title: 'Chemistry',
+    color: '#185FA5',
+    total: 16,
+    note: 'Required sequence: CHEM 160 → CHEM 180 → CHEM 240.',
+    courses: [
+      { code:'CHEM 160', name:'General Chemistry I', cr:3, s:'progress', tags:[], prereq:'None' },
+      { code:'CHEM 161', name:'Gen Chemistry I Lab', cr:1, s:'progress', tags:['lab'], prereq:'Concurrent w/ CHEM 160' },
+      { code:'CHEM 180', name:'Organic Chemistry I', cr:3, s:'progress', tags:[], prereq:'CHEM 160' },
+      { code:'CHEM 181', name:'Organic Chemistry I Lab', cr:1, s:'progress', tags:['lab'], prereq:'Concurrent w/ CHEM 180' },
+      { code:'CHEM 240', name:'Organic Chemistry II', cr:3, s:'none', tags:[], prereq:'CHEM 180' },
+      { code:'CHEM 241', name:'Organic Chemistry II Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 240' },
+      { code:'CHEM 260', name:'Quantitative Methods', cr:3, s:'none', tags:[], prereq:'CHEM 160' },
+      { code:'CHEM 261', name:'Quantitative Methods Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 260' },
+      { code:'CHEM 300', name:'Undergraduate Research Sp\'26', cr:1, s:'progress', tags:[], prereq:'Instructor permission' },
+      { code:'CHEM 300E', name:'Undergraduate Research Fa\'26', cr:1, s:'progress', tags:['1–2 cr'], prereq:'Instructor permission' },
+      // Electives
+      { code:'CHEM 285', name:'Analytical Chemistry', cr:3, s:'none', tags:[], prereq:'CHEM 160' },
+      { code:'CHEM 286', name:'Analytical Chemistry Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 285' },
+      { code:'CHEM 310', name:'Physical Chemistry I', cr:3, s:'none', tags:[], prereq:'CHEM 240 + MATH 132 + PHYS 112' },
+      { code:'CHEM 311', name:'Physical Chemistry Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 310' },
+      { code:'CHEM 320', name:'Physical Chemistry II', cr:3, s:'none', tags:[], prereq:'CHEM 310' },
+      { code:'CHEM 350', name:'Biochemistry I', cr:3, s:'none', tags:[], prereq:'CHEM 240' },
+      { code:'CHEM 351', name:'Biochemistry Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 350' },
+      { code:'CHEM 352', name:'Biochemistry II', cr:3, s:'none', tags:[], prereq:'CHEM 350' },
+      { code:'CHEM 360', name:'Inorganic Chemistry', cr:3, s:'none', tags:[], prereq:'CHEM 240' },
+      { code:'CHEM 380', name:'Spectroscopic Methods', cr:3, s:'none', tags:[], prereq:'CHEM 240' },
+    ]
+  },
+  {
+    id: 'math',
+    cat: 'math',
+    title: 'Mathematics',
+    color: '#BA7517',
+    total: 6,
+    note: 'Required: MATH 131 + 132 (6 cr). MATH 117 & 118 are entry prerequisites and do not count toward the 67-credit major total.',
+    courses: [
+      { code:'MATH 117', name:'Precalculus I', cr:3, s:'taken', grade:'B', tags:['Prereq for MATH 131'], prereq:'Placement', noCount:true },
+      { code:'MATH 118', name:'Precalculus II', cr:3, s:'progress', tags:['Prereq for MATH 131'], prereq:'MATH 117', noCount:true },
+      { code:'MATH 131', name:'Applied Calculus I', cr:3, s:'progress', tags:[], prereq:'MATH 118 or placement' },
+      { code:'MATH 132', name:'Applied Calculus II', cr:3, s:'none', tags:[], prereq:'MATH 131' },
+      { code:'MATH 161', name:'Calculus I', cr:4, s:'none', tags:['Optional'], prereq:'Placement or MATH 118' },
+      { code:'MATH 162', name:'Calculus II', cr:4, s:'none', tags:['Optional'], prereq:'MATH 161' },
+      { code:'MATH 201', name:'Linear Algebra', cr:3, s:'none', tags:['Optional'], prereq:'MATH 131' },
+      { code:'MATH 212', name:'Statistics', cr:3, s:'none', tags:['Optional'], prereq:'MATH 117' },
+      { code:'MATH 263', name:'Multivariable Calculus', cr:3, s:'none', tags:['Optional'], prereq:'MATH 162' },
+    ]
+  },
+  {
+    id: 'phys',
+    cat: 'phys',
+    title: 'Physics',
+    color: '#993556',
+    total: 8,
+    note: null,
+    courses: [
+      { code:'PHYS 111', name:'General Physics I', cr:3, s:'none', tags:[], prereq:'MATH 131 (may be concurrent)' },
+      { code:'PHYS 111L', name:'General Physics I Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ PHYS 111' },
+      { code:'PHYS 112', name:'General Physics II', cr:3, s:'none', tags:[], prereq:'PHYS 111' },
+      { code:'PHYS 112L', name:'General Physics II Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ PHYS 112' },
+      { code:'PHYS 121', name:'Physics for Life Sciences I', cr:3, s:'none', tags:['Alt. track'], prereq:'MATH 131' },
+      { code:'PHYS 122', name:'Physics for Life Sciences II', cr:3, s:'none', tags:['Alt. track'], prereq:'PHYS 121' },
+      { code:'PHYS 125', name:'Physics for Life Sciences I (calc)', cr:3, s:'none', tags:['Alt. track'], prereq:'MATH 131' },
+      { code:'PHYS 126', name:'Physics for Life Sciences II (calc)', cr:3, s:'none', tags:['Alt. track'], prereq:'PHYS 125' },
+    ]
+  },
+  {
+    id: 'core',
+    cat: 'core',
+    title: 'University Core & Graduation Requirements',
+    color: '#534AB7',
+    total: null,
+    note: 'LUC requires: UNIV 101, two Writing Intensive courses, Theology I & II, Philosophy/Ethics, Social Science, Fine Arts, Historical Studies, Cultural Diversity, Natural Science, ≥1 Engaged Learning, and Foreign Language at 102-level or competency.',
+    courses: [
+      { code:'UNIV 101', name:'First-Year Experience', cr:1, s:'taken', grade:'P', tags:[], prereq:'None' },
+      { code:'UCWR 110', name:'Writing Intensive 1', cr:3, s:'taken', grade:'B+', tags:[], prereq:'None' },
+      { code:'THEO 107', name:'Theology I', cr:3, s:'taken', grade:'A−', tags:[], prereq:'None' },
+      { code:'SOCL 101', name:'Social Science — Sociology', cr:3, s:'taken', grade:'A', tags:[], prereq:'None' },
+      { code:'PSYC 101', name:'Social Science — Psychology', cr:3, s:'taken', grade:'A', tags:[], prereq:'None' },
+      { code:'PHIL 181', name:'Ethics (Philosophy/Ethics req)', cr:3, s:'progress', tags:[], prereq:'None' },
+      { code:'THEO 2XX', name:'Theology II', cr:3, s:'none', tags:[], prereq:'THEO 107' },
+      { code:'FINE ART', name:'Fine Arts Core', cr:3, s:'none', tags:[], prereq:'None' },
+      { code:'HIST XXX', name:'Historical Studies', cr:3, s:'none', tags:[], prereq:'None' },
+      { code:'CULT DIV', name:'Cultural Diversity', cr:3, s:'none', tags:[], prereq:'None' },
+      { code:'WI 2', name:'Writing Intensive 2', cr:3, s:'none', tags:[], prereq:'UCWR 110 first' },
+      { code:'ENGAGED', name:'Engaged Learning', cr:0, s:'none', tags:['Verify w/ advisor'], prereq:'Varies' },
+      { code:'LANG 102', name:'Foreign Language 102', cr:3, s:'none', tags:['Or competency exam'], prereq:'Placement or LANG 101' },
+    ]
+  }
+];
+
+// ── SEMESTERS ─────────────────────────────────────────────────────────────────
+const SEMESTERS = [
+  { id:'sum-26',   label:'Summer 2026',  color:'#2ca882' },
+  { id:'fall-26',  label:'Fall 2026',    color:'#BA7517' },
+  { id:'jterm-27', label:'J-Term 2027',  color:'#534AB7' },
+  { id:'spr-27',   label:'Spring 2027',  color:'#185FA5' },
+  { id:'sum-27',   label:'Summer 2027',  color:'#2ca882' },
+  { id:'fall-27',  label:'Fall 2027',    color:'#BA7517' },
+  { id:'jterm-28', label:'J-Term 2028',  color:'#534AB7' },
+  { id:'spr-28',   label:'Spring 2028',  color:'#185FA5' },
+  { id:'sum-28',   label:'Summer 2028',  color:'#2ca882' },
+  { id:'fall-28',  label:'Fall 2028',    color:'#BA7517' },
+  { id:'jterm-29', label:'J-Term 2029',  color:'#534AB7' },
+  { id:'spr-29',   label:'Spring 2029',  color:'#185FA5' },
+  { id:'sum-29',   label:'Summer 2029',  color:'#2ca882' },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+const ST = {};
+const collapsed = {};
+
+SECTIONS.forEach(sec => {
+  collapsed[sec.id] = false;
+  sec.courses.forEach(c => {
+    ST[c.code] = c.s || 'none';
+  });
+});
+
+let CAT = 'all';
+let STATUS = 'all';
+let SEARCH = '';
+let COUNT_PROG = false;
+let VIEW = 'courses';
+const PLAN = {}; // course code → semester id
+
+// ── LOCALSTORAGE ──────────────────────────────────────────────────────────────
+const LS_KEY = 'luc-planner-v1';
+
+function saveState() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify({ ST, collapsed, COUNT_PROG, PLAN }));
+  } catch(e) {}
+}
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(LS_KEY));
+    if (!saved) return;
+    if (saved.ST) Object.assign(ST, saved.ST);
+    if (saved.collapsed) Object.assign(collapsed, saved.collapsed);
+    if (typeof saved.COUNT_PROG === 'boolean') COUNT_PROG = saved.COUNT_PROG;
+    if (saved.PLAN) Object.assign(PLAN, saved.PLAN);
+  } catch(e) {}
+}
+
+loadState();
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function tagClass(t) {
+  if (t === 'lab') return 'lab';
+  if (t === '300-level') return 'level300';
+  return 'other';
+}
+
+// All sections count toward the credit totals displayed in the header
+function computeTotals() {
+  let taken = 0, inprog = 0;
+  SECTIONS.forEach(sec => {
+    sec.courses.forEach(c => {
+      if (c.noCount) return;
+      if (ST[c.code] === 'taken') taken += c.cr;
+      else if (ST[c.code] === 'progress') inprog += c.cr;
+    });
+  });
+  return { taken, inprog };
+}
+
+function setSemester(code, semId) {
+  if (semId === '') delete PLAN[code];
+  else PLAN[code] = semId;
+  saveState();
+  if (VIEW === 'plan') renderPlan();
+  else {
+    // update just the select in the course row
+    const row = document.querySelector(`.course-row[data-code="${CSS.escape(code)}"]`);
+    if (row) {
+      const sel = row.querySelector('.sem-select');
+      if (sel) sel.className = 'sem-select' + (semId ? ' assigned' : '');
+    }
+  }
+}
+
+function setView(v) {
+  VIEW = v;
+  document.getElementById('view-btn-courses').classList.toggle('active', v === 'courses');
+  document.getElementById('view-btn-plan').classList.toggle('active', v === 'plan');
+  document.getElementById('sections').style.display = v === 'courses' ? '' : 'none';
+  document.getElementById('plan-view').style.display = v === 'plan' ? '' : 'none';
+  document.getElementById('search-wrap').style.display = v === 'courses' ? '' : 'none';
+  document.getElementById('search-count').style.display = v === 'courses' ? '' : 'none';
+  if (v === 'plan') renderPlan();
+}
+
+function semesterOptionsHtml(currentSemId) {
+  return SEMESTERS.map(s =>
+    `<option value="${s.id}" ${currentSemId === s.id ? 'selected' : ''}>${s.label}</option>`
+  ).join('');
+}
+
+function renderPlan() {
+  const container = document.getElementById('plan-view');
+
+  // gather all courses
+  const allCourses = SECTIONS.flatMap(sec => sec.courses);
+
+  let html = '';
+
+  // semesters that have at least one course, or all of them
+  SEMESTERS.forEach(sem => {
+    const courses = allCourses.filter(c => PLAN[c.code] === sem.id);
+    const totalCr = courses.reduce((a, c) => a + c.cr, 0);
+
+    html += `<div class="sem-card">
+      <div class="sem-card-header">
+        <span class="sem-card-dot" style="background:${sem.color}"></span>
+        <span class="sem-card-title">${sem.label}</span>
+        <span class="sem-card-cr">${totalCr} cr</span>
+      </div>`;
+
+    if (courses.length === 0) {
+      html += `<div class="sem-empty">No courses added yet — assign courses from the Courses view.</div>`;
+    } else {
+      courses.forEach(c => {
+        const st = ST[c.code];
+        html += `<div class="sem-course-row">
+          <span class="sem-status-dot ${st}"></span>
+          <div class="sem-course-info">
+            <div class="sem-course-code">${c.code}</div>
+            <div class="sem-course-name">${c.name}</div>
+          </div>
+          <div class="sem-course-cr">${c.cr}</div>
+          <button class="sem-remove" onclick="setSemester('${c.code}', '')" title="Remove from semester">✕</button>
+        </div>`;
+      });
+    }
+
+    html += `</div>`;
+  });
+
+  // unassigned courses
+  const unassigned = allCourses.filter(c => !PLAN[c.code] && ST[c.code] !== 'taken' && ST[c.code] !== 'skip');
+  if (unassigned.length > 0) {
+    html += `<div class="sem-card">
+      <div class="sem-card-header">
+        <span class="sem-card-dot" style="background:var(--gdot)"></span>
+        <span class="sem-card-title" style="color:var(--t3)">Unassigned</span>
+        <span class="sem-card-cr">${unassigned.length} courses</span>
+      </div>`;
+    unassigned.forEach(c => {
+      html += `<div class="sem-course-row">
+        <span class="sem-status-dot ${ST[c.code]}"></span>
+        <div class="sem-course-info">
+          <div class="sem-course-code">${c.code}</div>
+          <div class="sem-course-name">${c.name}</div>
+        </div>
+        <div class="sem-course-cr">${c.cr}</div>
+        <select class="sem-select assigned" onchange="setSemester('${c.code}', this.value)">
+          <option value="">Assign to semester…</option>
+          ${semesterOptionsHtml('')}
+        </select>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function onSearch(val) {
+  SEARCH = val.trim().toLowerCase();
+  document.getElementById('search-clear').classList.toggle('visible', SEARCH.length > 0);
+  renderSections();
+}
+
+function clearSearch() {
+  SEARCH = '';
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-clear').classList.remove('visible');
+  renderSections();
+}
+
+function highlight(text, query) {
+  if (!query) return text;
+  const idx = text.toLowerCase().indexOf(query);
+  if (idx === -1) return text;
+  return text.slice(0, idx) +
+    `<span class="highlight">${text.slice(idx, idx + query.length)}</span>` +
+    highlight(text.slice(idx + query.length), query);
+}
+
+
+function toggleCountProg() {
+  COUNT_PROG = !COUNT_PROG;
+  const btn = document.getElementById('prog-toggle');
+  btn.classList.toggle('on', COUNT_PROG);
+  document.getElementById('prog-toggle-label').textContent = COUNT_PROG ? 'counting planned' : 'count planned';
+  updateStats();
+  saveState();
+}
+
+// All sections, all courses (including noCount) — for 120-cr graduation tracker
+function computeAllTotals() {
+  let taken = 0, inprog = 0;
+  SECTIONS.forEach(sec => {
+    sec.courses.forEach(c => {
+      if (ST[c.code] === 'taken') taken += c.cr;
+      else if (ST[c.code] === 'progress') inprog += c.cr;
+    });
+  });
+  return { taken, inprog };
+}
+
+function updateStats() {
+  // ── Major tracker (67 cr, noCount excluded) ──
+  const { taken, inprog } = computeTotals();
+  const effective = taken + (COUNT_PROG ? inprog : 0);
+  const rem = Math.max(0, 67 - effective);
+  const pct = Math.min(100, Math.round(effective / 67 * 100));
+
+  document.getElementById('cd-bar').style.width = pct + '%';
+  document.getElementById('s-done').textContent = taken;
+  document.getElementById('s-prog').textContent = inprog;
+  document.getElementById('cd-num').textContent = rem;
+
+  // ── Graduation tracker (120 cr, all courses) ──
+  const { taken: takenAll, inprog: inprogAll } = computeAllTotals();
+  const effectiveAll = takenAll + (COUNT_PROG ? inprogAll : 0);
+  const remAll = Math.max(0, 120 - effectiveAll);
+  const pctAll = Math.min(100, Math.round(effectiveAll / 120 * 100));
+
+  document.getElementById('cd-bar-2').style.width = pctAll + '%';
+  document.getElementById('s-done-2').textContent = takenAll;
+  document.getElementById('s-prog-2').textContent = inprogAll;
+  document.getElementById('cd-num-2').textContent = remAll;
+
+  // update each section's progress bar + counter label without rebuilding rows
+  SECTIONS.forEach(sec => {
+    const card = document.querySelector(`.section-card[data-sec="${sec.id}"]`);
+    if (!card) return;
+    const secTaken = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'taken'    ? c.cr : 0), 0);
+    const secProg  = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'progress' ? c.cr : 0), 0);
+    const secEffective = secTaken + (COUNT_PROG ? secProg : 0);
+    const secTotal = sec.total;
+    const secPct   = secTotal ? Math.min(100, Math.round(secEffective / secTotal * 100)) : 0;
+    const fill = card.querySelector('.section-progress-bar-fill');
+    if (fill) fill.style.width = secPct + '%';
+    const lbl = card.querySelector('.section-cr');
+    if (lbl && secTotal) lbl.textContent = `${secEffective} / ${secTotal} cr`;
+  });
+}
+
+// ── CIRCLE CLICK (surgical DOM update, no full re-render) ─────────────────────
+function setStatus(code, newSt) {
+  ST[code] = ST[code] === newSt ? 'none' : newSt;
+  const cur = ST[code];
+
+  const row = document.querySelector(`.course-row[data-code="${CSS.escape(code)}"]`);
+  if (row) {
+    const [takenCircle, progCircle, skipCircle] = row.querySelectorAll('.circle');
+    takenCircle.className = 'circle' + (cur === 'taken'    ? ' taken'    : '');
+    progCircle.className  = 'circle' + (cur === 'progress' ? ' progress' : '');
+    skipCircle.className  = 'circle' + (cur === 'skip'     ? ' skip'     : '');
+  }
+
+  updateStats();
+  saveState();
+}
+
+// ── FILTER BUTTONS ────────────────────────────────────────────────────────────
+function setCat(v) {
+  CAT = v;
+  document.querySelectorAll('.filter-row:first-of-type .f-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('onclick').includes(`'${v}'`));
+  });
+  renderSections();
+}
+
+function setStatus2(v) {
+  STATUS = v;
+  document.querySelectorAll('.filter-row:last-of-type .f-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('onclick').includes(`'${v}'`));
+  });
+  renderSections();
+}
+
+function toggleSection(id) {
+  collapsed[id] = !collapsed[id];
+  saveState();
+  renderSections();
+}
+
+// ── FULL SECTION RENDER (only on filter/collapse/search changes) ──────────────
+function renderSections() {
+  const container = document.getElementById('sections');
+  const countEl   = document.getElementById('search-count');
+  let html = '';
+  let totalMatches = 0;
+
+  SECTIONS.forEach(sec => {
+    if (CAT !== 'all' && CAT !== sec.cat) return;
+
+    let courses = sec.courses;
+    if (STATUS === 'taken')         courses = courses.filter(c => ST[c.code] === 'taken');
+    else if (STATUS === 'progress') courses = courses.filter(c => ST[c.code] === 'progress');
+
+    if (SEARCH) {
+      courses = courses.filter(c =>
+        c.code.toLowerCase().includes(SEARCH) ||
+        c.name.toLowerCase().includes(SEARCH)
+      );
+    }
+
+    if (courses.length === 0) return;
+    totalMatches += courses.length;
+
+    const secTaken = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'taken'    ? c.cr : 0), 0);
+    const secProg  = sec.courses.reduce((a, c) => a + (!c.noCount && ST[c.code] === 'progress' ? c.cr : 0), 0);
+    const secEffective = secTaken + (COUNT_PROG ? secProg : 0);
+    const secTotal = sec.total;
+    const secPct   = secTotal ? Math.min(100, Math.round(secEffective / secTotal * 100)) : 0;
+    const secLabel = secTotal ? `${secEffective} / ${secTotal} cr` : 'track items';
+    const isCollapsed = collapsed[sec.id] && !SEARCH; // always expand when searching
+
+    html += `<div class="section-card" data-sec="${sec.id}">
+      <div class="section-header" onclick="toggleSection('${sec.id}')">
+        <span class="chevron ${isCollapsed ? 'collapsed' : ''}">▼</span>
+        <span class="section-title" style="color:${sec.color}">${sec.title}</span>
+        <span class="section-cr">${secLabel}</span>
+      </div>`;
+
+    if (!isCollapsed) {
+      html += `<div class="section-body">
+        <div class="section-progress-bar">
+          <div class="section-progress-bar-bg"></div>
+          <div class="section-progress-bar-fill" style="width:${secPct}%;background:${sec.color}"></div>
+        </div>`;
+
+      if (sec.note && !SEARCH) html += `<div class="section-note">${sec.note}</div>`;
+
+      courses.forEach(c => {
+        const st = ST[c.code];
+        const tagsHtml  = c.tags.map(t => `<span class="tag ${tagClass(t)}">${t}</span>`).join('');
+        const gradeHtml = c.grade ? `<span class="tag other">${c.grade}</span>` : '';
+        const dispCode = highlight(c.code, SEARCH);
+        const dispName = highlight(c.name, SEARCH);
+
+        html += `<div class="course-row" data-code="${c.code}">
+          <div class="course-info">
+            <div class="course-code">${dispCode}</div>
+            <div class="course-name">${dispName}</div>
+            ${(tagsHtml || gradeHtml) ? `<div class="tags">${gradeHtml}${tagsHtml}</div>` : ''}
+            ${c.prereq ? `<div class="course-prereq">Prereq: ${c.prereq}</div>` : ''}
+            <select class="sem-select${PLAN[c.code] ? ' assigned' : ''}" onchange="setSemester('${c.code}', this.value)">
+              <option value="">+ Add to semester</option>
+              ${semesterOptionsHtml(PLAN[c.code] || '')}
+            </select>
+          </div>
+          <div class="course-credits">
+            <div class="cr-num">${c.cr}</div>
+            <div class="cr-label">cr</div>
+          </div>
+          <div class="course-circles">
+            <div class="circle-wrap" onclick="setStatus('${c.code}','taken')">
+              <div class="circle${st === 'taken' ? ' taken' : ''}"></div>
+              <div class="circle-label">Taken</div>
+            </div>
+            <div class="circle-wrap" onclick="setStatus('${c.code}','progress')">
+              <div class="circle${st === 'progress' ? ' progress' : ''}"></div>
+              <div class="circle-label">In progress</div>
+            </div>
+            <div class="circle-wrap" onclick="setStatus('${c.code}','skip')">
+              <div class="circle${st === 'skip' ? ' skip' : ''}"></div>
+              <div class="circle-label">Not taken</div>
+            </div>
+          </div>
+        </div>`;
+      });
+
+      html += `</div>`;
+    }
+
+    html += `</div>`;
+  });
+
+  if (html === '') {
+    html = `<div id="no-results"><strong>No courses found</strong>Try a different search term or filter combination.</div>`;
+  }
+
+  container.innerHTML = html;
+
+  // update search count label
+  if (SEARCH) {
+    countEl.textContent = totalMatches === 1
+      ? `1 course matches "${SEARCH}"`
+      : `${totalMatches} courses match "${SEARCH}"`;
+  } else {
+    countEl.textContent = '';
+  }
+
+  updateStats();
+}
+
+// sync toggle button to loaded state before first render
+const _tog = document.getElementById('prog-toggle');
+if (_tog) {
+  _tog.classList.toggle('on', COUNT_PROG);
+  document.getElementById('prog-toggle-label').textContent = COUNT_PROG ? 'counting planned' : 'count planned';
+}
+
+renderSections();
+</script>
+</body>
+</html>
