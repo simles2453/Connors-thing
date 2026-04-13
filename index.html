@@ -82,6 +82,143 @@
     border-bottom: 1px solid var(--br);
   }
 
+  #help-btn {
+    margin-left: auto;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid var(--br);
+    background: var(--bg);
+    color: var(--t2);
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+  }
+  #help-btn:hover { background: #8B1A1A; color: #fff; border-color: #8B1A1A; }
+
+  /* ── WELCOME MODAL ── */
+  #welcome-overlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(4px);
+  }
+  #welcome-modal {
+    background: var(--surf);
+    border: 1px solid var(--br);
+    border-radius: 16px;
+    padding: 36px;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .welcome-crest {
+    width: 52px;
+    height: 52px;
+    background: linear-gradient(135deg, #8B1A1A 0%, #6B0F0F 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #e8c97e;
+    margin: 0 auto 16px;
+  }
+  #welcome-modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--t1);
+    margin-bottom: 6px;
+  }
+  .w-subtitle {
+    font-size: 13px;
+    color: var(--t3);
+    margin-bottom: 16px;
+  }
+  .w-disclaimer {
+    background: #FEF3E2;
+    border: 1px solid #F5C97A;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #7A4F00;
+    text-align: left;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  @media (prefers-color-scheme: dark) {
+    .w-disclaimer { background: #2a1f08; border-color: #6b4a0f; color: #d4a74a; }
+  }
+  #welcome-name-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--br);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--t1);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 12px;
+    text-align: center;
+    transition: border-color 0.15s;
+    box-sizing: border-box;
+  }
+  #welcome-name-input:focus { border-color: #6b9fd4; }
+  #welcome-name-input::placeholder { color: var(--t3); }
+  .welcome-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  .welcome-feature {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 11.5px;
+    color: var(--t2);
+    line-height: 1.5;
+  }
+  .welcome-feature strong {
+    display: block;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--t1);
+    margin-bottom: 2px;
+  }
+  #welcome-btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background: #8B1A1A;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  #welcome-btn:hover { background: #6B0F0F; }
+
   #luc-badge {
     display: flex;
     align-items: center;
@@ -716,6 +853,206 @@
     max-width: 36px;
   }
 
+  /* ── TOUR SYSTEM ── */
+  #tour-overlay {
+    display: flex;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    backdrop-filter: blur(3px);
+    transition: background 0.3s;
+  }
+
+  #tour-modal {
+    background: var(--surf);
+    border: 1px solid var(--br);
+    border-radius: 16px;
+    padding: 32px;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    position: relative;
+    animation: fadeIn 0.25s ease;
+  }
+
+  .tour-crest {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #8B1A1A 0%, #6B0F0F 100%);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: #e8c97e;
+    margin: 0 auto 14px;
+  }
+
+  .tour-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  #tour-modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--t1);
+    margin-bottom: 8px;
+  }
+
+  #tour-modal p {
+    font-size: 13px;
+    color: var(--t2);
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .tour-progress {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 20px;
+  }
+
+  .tour-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--gdot);
+    transition: background 0.2s;
+  }
+
+  .tour-dot.active { background: #8B1A1A; }
+  .tour-dot.done { background: var(--green); }
+
+  .tour-btns {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+
+  .tour-btn-primary {
+    flex: 1;
+    padding: 11px;
+    border-radius: 8px;
+    border: none;
+    background: #8B1A1A;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .tour-btn-primary:hover { background: #6B0F0F; }
+
+  .tour-btn-secondary {
+    padding: 11px 18px;
+    border-radius: 8px;
+    border: 1px solid var(--br);
+    background: transparent;
+    color: var(--t3);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: color 0.15s;
+  }
+
+  .tour-btn-secondary:hover { color: var(--t1); }
+
+  .tour-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 20px;
+    text-align: left;
+  }
+
+  .tour-feature {
+    background: var(--bg);
+    border-radius: 8px;
+    padding: 9px 11px;
+    font-size: 11px;
+    color: var(--t2);
+    line-height: 1.5;
+  }
+
+  .tour-feature strong {
+    display: block;
+    font-weight: 700;
+    color: var(--t1);
+    margin-bottom: 1px;
+  }
+
+  #tour-name-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--br);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--t1);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    outline: none;
+    margin-bottom: 16px;
+    text-align: center;
+    transition: border-color 0.15s;
+  }
+
+  #tour-name-input:focus { border-color: #6b9fd4; }
+  #tour-name-input::placeholder { color: var(--t3); }
+
+  .tour-demo {
+    background: var(--bg);
+    border-radius: 10px;
+    padding: 14px;
+    margin-bottom: 18px;
+    text-align: left;
+  }
+
+  .tour-demo-circles {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin: 10px 0;
+  }
+
+  .tour-demo-circle-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .tour-demo-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+  }
+
+  .tour-demo-circle.green { background: var(--green); border-color: var(--green-m); box-shadow: 0 0 0 3px var(--green-l); }
+  .tour-demo-circle.amber { background: var(--amber); border-color: var(--amber-d); box-shadow: 0 0 0 3px var(--amber-l); }
+  .tour-demo-circle.blue  { background: #185FA5; border-color: #0f3d6e; box-shadow: 0 0 0 3px #daeaf7; }
+  .tour-demo-circle.gray  { background: var(--gdot); }
+
+  .tour-demo-label {
+    font-size: 9px;
+    color: var(--t3);
+    text-align: center;
+    font-weight: 500;
+  }
+
   /* ── DESCRIPTION POPUP ── */
   #desc-overlay {
     display: none;
@@ -975,7 +1312,24 @@
     gap: 10px;
     padding: 11px 16px;
     border-bottom: 1px solid var(--br);
+    cursor: pointer;
+    user-select: none;
   }
+
+  .sem-card-header:hover { background: rgba(0,0,0,0.015); }
+  @media (prefers-color-scheme: dark) {
+    .sem-card-header:hover { background: rgba(255,255,255,0.02); }
+  }
+
+  .sem-card-chevron {
+    font-size: 11px;
+    color: var(--t3);
+    transition: transform 0.22s ease;
+    flex-shrink: 0;
+    margin-right: 2px;
+  }
+
+  .sem-card-chevron.collapsed { transform: rotate(-90deg); }
 
   .sem-card-dot {
     width: 10px;
@@ -1093,6 +1447,86 @@
   .sem-status-dot.progress { background: var(--amber); }
   .sem-status-dot.none     { background: var(--gdot); }
   .sem-status-dot.skip     { background: var(--gdot); }
+
+  /* ── INSIGHTS VIEW ── */
+  #insights-view {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .insight-card {
+    background: var(--surf);
+    border: 1px solid var(--br);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+    padding: 14px 16px;
+  }
+
+  .insight-kicker {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--t3);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .insight-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    line-height: 1;
+    color: var(--t1);
+    margin-bottom: 6px;
+  }
+
+  .insight-sub {
+    font-size: 12px;
+    color: var(--t2);
+    line-height: 1.55;
+  }
+
+  .insight-sub strong {
+    color: var(--t1);
+    font-weight: 700;
+  }
+
+  .insight-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 6px;
+  }
+
+  .insight-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 12px;
+    color: var(--t2);
+    padding: 8px 0;
+    border-top: 1px solid var(--br);
+  }
+
+  .insight-row:first-child { border-top: none; padding-top: 0; }
+
+  .insight-row strong {
+    color: var(--t1);
+    font-weight: 700;
+    text-align: right;
+  }
+
+  .insight-span-2 { grid-column: 1 / -1; }
+
+  @media (max-width: 700px) {
+    .insights-grid { grid-template-columns: 1fr; }
+  }
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(4px); }
     to { opacity: 1; transform: translateY(0); }
@@ -1118,6 +1552,12 @@
 </head>
 <body>
 
+<div id="tour-overlay">
+  <div id="tour-modal">
+    <div id="tour-content"></div>
+  </div>
+</div>
+
 <div id="desc-overlay" onclick="if(event.target===this)hideDesc()">
   <div id="desc-modal">
     <button id="desc-close" onclick="hideDesc()">✕</button>
@@ -1140,8 +1580,9 @@
     <div id="header-divider"></div>
     <div id="header-titles">
       <div id="page-title">Biology BS — Degree Planner</div>
-      <div id="page-subtitle">Connor · Class of 2028 · Rogers Park Campus</div>
+      <div id="page-subtitle">Biology BS · Loyola University Chicago</div>
     </div>
+    <button id="help-btn" onclick="showWelcome()" title="Show intro guide">?</button>
   </div>
 
   <div id="countdown-bar">
@@ -1214,6 +1655,7 @@
     <span class="filter-label">View</span>
     <button class="f-btn active" id="view-btn-courses" onclick="setView('courses')">Courses</button>
     <button class="f-btn" id="view-btn-plan" onclick="setView('plan')">📅 Semester Plan</button>
+    <button class="f-btn" id="view-btn-insights" onclick="setView('insights')">📊 Insights</button>
   </div>
 
   <div id="search-wrap">
@@ -1225,6 +1667,7 @@
 
   <div id="sections"></div>
   <div id="plan-view" style="display:none"></div>
+  <div id="insights-view" style="display:none"></div>
 </div>
 
 <footer>
@@ -1259,16 +1702,16 @@ const SECTIONS = [
     total: 18,
     note: null,
     courses: [
-      { code:'BIOL 101', name:'Introductory Biology I', cr:3, s:'taken', grade:'B+', tags:[], prereq:'None' },
-      { code:'BIOL 111', name:'Intro Biology I Lab', cr:1, s:'taken', grade:'B−', tags:['lab'], prereq:'Concurrent w/ BIOL 101' },
-      { code:'BIOL 102', name:'Introductory Biology II', cr:3, s:'progress', tags:[], prereq:'BIOL 101' },
-      { code:'BIOL 112', name:'Intro Biology II Lab', cr:1, s:'progress', tags:['lab'], prereq:'Concurrent w/ BIOL 102' },
+      { code:'BIOL 101', name:'Introductory Biology I', cr:3, s:'none', grade:'B+', tags:[], prereq:'None' },
+      { code:'BIOL 111', name:'Intro Biology I Lab', cr:1, s:'none', grade:'B−', tags:['lab'], prereq:'Concurrent w/ BIOL 101' },
+      { code:'BIOL 102', name:'Introductory Biology II', cr:3, s:'none', tags:[], prereq:'BIOL 101' },
+      { code:'BIOL 112', name:'Intro Biology II Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ BIOL 102' },
       { code:'BIOL 251', name:'Cell Biology', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
       { code:'BIOL 265', name:'Ecology', cr:3, s:'none', tags:[], prereq:'BIOL 101' },
       { code:'BIOL 282', name:'Genetics', cr:3, s:'none', tags:[], prereq:'BIOL 102' },
       { code:'BIOL 252', name:'Cell Biology Lab', cr:1, s:'none', tags:['lab','Choose one'], prereq:'Concurrent w/ BIOL 251' },
       { code:'BIOL 266', name:'Ecology Lab', cr:1, s:'none', tags:['lab','Choose one'], prereq:'Concurrent w/ BIOL 265' },
-      { code:'BIOL 283', name:'Genetics Lab', cr:1, s:'progress', tags:['lab','Choose one'], prereq:'Concurrent w/ BIOL 282' },
+      { code:'BIOL 283', name:'Genetics Lab', cr:1, s:'none', tags:['lab','Choose one'], prereq:'Concurrent w/ BIOL 282' },
     ]
   },
   {
@@ -1342,16 +1785,16 @@ const SECTIONS = [
     total: 16,
     note: 'Required sequence: CHEM 160 → CHEM 180 → CHEM 240.',
     courses: [
-      { code:'CHEM 160', name:'General Chemistry I', cr:3, s:'progress', tags:[], prereq:'None' },
-      { code:'CHEM 161', name:'Gen Chemistry I Lab', cr:1, s:'progress', tags:['lab'], prereq:'Concurrent w/ CHEM 160' },
-      { code:'CHEM 180', name:'Organic Chemistry I', cr:3, s:'progress', tags:[], prereq:'CHEM 160' },
-      { code:'CHEM 181', name:'Organic Chemistry I Lab', cr:1, s:'progress', tags:['lab'], prereq:'Concurrent w/ CHEM 180' },
+      { code:'CHEM 160', name:'General Chemistry I', cr:3, s:'none', tags:[], prereq:'None' },
+      { code:'CHEM 161', name:'Gen Chemistry I Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 160' },
+      { code:'CHEM 180', name:'Organic Chemistry I', cr:3, s:'none', tags:[], prereq:'CHEM 160' },
+      { code:'CHEM 181', name:'Organic Chemistry I Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 180' },
       { code:'CHEM 240', name:'Organic Chemistry II', cr:3, s:'none', tags:[], prereq:'CHEM 180' },
       { code:'CHEM 241', name:'Organic Chemistry II Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 240' },
       { code:'CHEM 260', name:'Quantitative Methods', cr:3, s:'none', tags:[], prereq:'CHEM 160' },
       { code:'CHEM 261', name:'Quantitative Methods Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 260' },
-      { code:'CHEM 300', name:'Undergraduate Research Sp\'26', cr:1, s:'progress', tags:[], prereq:'Instructor permission' },
-      { code:'CHEM 300E', name:'Undergraduate Research Fa\'26', cr:1, s:'progress', tags:['1–2 cr'], prereq:'Instructor permission' },
+      { code:'CHEM 300', name:'Undergraduate Research Sp\'26', cr:1, s:'none', tags:[], prereq:'Instructor permission' },
+      { code:'CHEM 300E', name:'Undergraduate Research Fa\'26', cr:1, s:'none', tags:['1–2 cr'], prereq:'Instructor permission' },
       // Electives
       { code:'CHEM 285', name:'Analytical Chemistry', cr:3, s:'none', tags:[], prereq:'CHEM 160' },
       { code:'CHEM 286', name:'Analytical Chemistry Lab', cr:1, s:'none', tags:['lab'], prereq:'Concurrent w/ CHEM 285' },
@@ -1373,9 +1816,9 @@ const SECTIONS = [
     total: 6,
     note: 'Required: MATH 131 + 132 (6 cr). MATH 117 & 118 are entry prerequisites and do not count toward the 67-credit major total.',
     courses: [
-      { code:'MATH 117', name:'Precalculus I', cr:3, s:'taken', grade:'B', tags:['Prereq for MATH 131'], prereq:'Placement', noCount:true },
-      { code:'MATH 118', name:'Precalculus II', cr:3, s:'progress', tags:['Prereq for MATH 131'], prereq:'MATH 117', noCount:true },
-      { code:'MATH 131', name:'Applied Calculus I', cr:3, s:'progress', tags:[], prereq:'MATH 118 or placement' },
+      { code:'MATH 117', name:'Precalculus I', cr:3, s:'none', grade:'B', tags:['Prereq for MATH 131'], prereq:'Placement', noCount:true },
+      { code:'MATH 118', name:'Precalculus II', cr:3, s:'none', tags:['Prereq for MATH 131'], prereq:'MATH 117', noCount:true },
+      { code:'MATH 131', name:'Applied Calculus I', cr:3, s:'none', tags:[], prereq:'MATH 118 or placement' },
       { code:'MATH 132', name:'Applied Calculus II', cr:3, s:'none', tags:[], prereq:'MATH 131' },
       { code:'MATH 161', name:'Calculus I', cr:4, s:'none', tags:['Optional'], prereq:'Placement or MATH 118' },
       { code:'MATH 162', name:'Calculus II', cr:4, s:'none', tags:['Optional'], prereq:'MATH 161' },
@@ -1411,13 +1854,13 @@ const SECTIONS = [
     note: 'LUC Core requires 16 courses (48 cr) across 10 knowledge areas, plus UNIV 101 and Engaged Learning.',
     courses: [
       // UNIV 101
-      { code:'UNIV 101',  name:'First-Year Experience',                        cr:1, s:'taken',    tags:[], prereq:'None' },
+      { code:'UNIV 101',  name:'First-Year Experience',                        cr:1, s:'none',    tags:[], prereq:'None' },
       // Engaged Learning
       { code:'ENGAGED',  name:'Engaged Learning',                              cr:3, s:'none',    tags:['Verify w/ advisor'], prereq:'Varies' },
       // College Writing Seminar (1 course, 3 cr)
-      { code:'UCWR 110', name:'College Writing Seminar',                       cr:3, s:'taken',    tags:['Writing Seminar'], prereq:'None' },
+      { code:'UCWR 110', name:'College Writing Seminar',                       cr:3, s:'none',    tags:['Writing Seminar'], prereq:'None' },
       // Ethical Knowledge & Inquiry (1 course, 3 cr)
-      { code:'PHIL 181', name:'Ethics — Ethical Knowledge & Inquiry',          cr:3, s:'progress', tags:['Ethical Knowledge'], prereq:'None' },
+      { code:'PHIL 181', name:'Ethics — Ethical Knowledge & Inquiry',          cr:3, s:'none', tags:['Ethical Knowledge'], prereq:'None' },
       // Artistic Knowledge & Inquiry (1 course, 3 cr)
       { code:'ARTS XXX', name:'Artistic Knowledge & Inquiry',                  cr:3, s:'none',    tags:['Artistic Knowledge'], prereq:'None' },
       // Quantitative Knowledge & Inquiry (1 course, 3 cr)
@@ -1435,10 +1878,10 @@ const SECTIONS = [
       { code:'SCI XXX',  name:'Scientific Knowledge & Inquiry I',              cr:3, s:'none',    tags:['Scientific Knowledge'], prereq:'None' },
       { code:'SCI XX2',  name:'Scientific Knowledge & Inquiry II',             cr:3, s:'none',    tags:['Scientific Knowledge'], prereq:'None' },
       // Societal & Cultural Knowledge & Inquiry (2 courses, 6 cr)
-      { code:'SOCL 101', name:'Societal & Cultural Knowledge I — Sociology',   cr:3, s:'taken',    tags:['Societal & Cultural'], prereq:'None' },
-      { code:'PSYC 101', name:'Societal & Cultural Knowledge II — Psychology', cr:3, s:'taken',    tags:['Societal & Cultural'], prereq:'None' },
+      { code:'SOCL 101', name:'Societal & Cultural Knowledge I — Sociology',   cr:3, s:'none',    tags:['Societal & Cultural'], prereq:'None' },
+      { code:'PSYC 101', name:'Societal & Cultural Knowledge II — Psychology', cr:3, s:'none',    tags:['Societal & Cultural'], prereq:'None' },
       // Theological & Religious Knowledge & Inquiry (2 courses, 6 cr)
-      { code:'THEO 107', name:'Theological & Religious Knowledge I',           cr:3, s:'taken',    tags:['Theological & Religious'], prereq:'None' },
+      { code:'THEO 107', name:'Theological & Religious Knowledge I',           cr:3, s:'none',    tags:['Theological & Religious'], prereq:'None' },
       { code:'THEO 2XX', name:'Theological & Religious Knowledge II',          cr:3, s:'none',    tags:['Theological & Religious'], prereq:'THEO 107' },
     ]
   }
@@ -1587,25 +2030,12 @@ function hideDesc() {
 }
 
 // ── SEMESTERS ─────────────────────────────────────────────────────────────────
-const SEMESTERS = [
-  { id:'sum-26',   label:'Summer 2026',  color:'#2ca882' },
-  { id:'fall-26',  label:'Fall 2026',    color:'#BA7517' },
-  { id:'jterm-27', label:'J-Term 2027',  color:'#534AB7' },
-  { id:'spr-27',   label:'Spring 2027',  color:'#185FA5' },
-  { id:'sum-27',   label:'Summer 2027',  color:'#2ca882' },
-  { id:'fall-27',  label:'Fall 2027',    color:'#BA7517' },
-  { id:'jterm-28', label:'J-Term 2028',  color:'#534AB7' },
-  { id:'spr-28',   label:'Spring 2028',  color:'#185FA5' },
-  { id:'sum-28',   label:'Summer 2028',  color:'#2ca882' },
-  { id:'fall-28',  label:'Fall 2028',    color:'#BA7517' },
-  { id:'jterm-29', label:'J-Term 2029',  color:'#534AB7' },
-  { id:'spr-29',   label:'Spring 2029',  color:'#185FA5' },
-  { id:'sum-29',   label:'Summer 2029',  color:'#2ca882' },
-];
+const SEMESTERS = [];
 
 // ── STATE ─────────────────────────────────────────────────────────────────────
 const ST = {};
 const collapsed = {};
+const semCollapsed = {};
 
 SECTIONS.forEach(sec => {
   collapsed[sec.id] = false;
@@ -1627,7 +2057,7 @@ const LS_KEY = 'luc-planner-v1';
 
 function saveState() {
   try {
-    localStorage.setItem(LS_KEY, JSON.stringify({ ST, collapsed, COUNT_PROG, PLAN, PLAN_INFO }));
+    localStorage.setItem(LS_KEY, JSON.stringify({ ST, collapsed, semCollapsed, COUNT_PROG, PLAN, PLAN_INFO }));
   } catch(e) {}
 }
 
@@ -1637,8 +2067,14 @@ function loadState() {
     if (!saved) return;
     if (saved.ST) Object.assign(ST, saved.ST);
     if (saved.collapsed) Object.assign(collapsed, saved.collapsed);
+    if (saved.semCollapsed) Object.assign(semCollapsed, saved.semCollapsed);
     if (typeof saved.COUNT_PROG === 'boolean') COUNT_PROG = saved.COUNT_PROG;
-    if (saved.PLAN) Object.assign(PLAN, saved.PLAN);
+    if (saved.PLAN) {
+      Object.entries(saved.PLAN).forEach(([code, semId]) => {
+        const norm = normalizeSemesterId(semId);
+        if (norm) PLAN[code] = norm;
+      });
+    }
     if (saved.PLAN_INFO) Object.assign(PLAN_INFO, saved.PLAN_INFO);
   } catch(e) {}
 }
@@ -1677,38 +2113,174 @@ function computeTotals() {
 }
 
 function setSemester(code, semId) {
-  if (semId === '') delete PLAN[code];
-  else PLAN[code] = semId;
-  saveState();
-  if (VIEW === 'plan') renderPlan();
-  else {
-    // update the select styling
-    const row = document.querySelector(`.course-row[data-code="${CSS.escape(code)}"]`);
-    if (row) {
-      const sel = row.querySelector('.sem-select');
-      if (sel) sel.className = 'sem-select' + (semId ? ' assigned' : '');
-      // update planned circle
-      const plannedCircle = row.querySelectorAll('.circle')[2]; // 0=taken,1=progress,2=planned,3=skip
-      if (plannedCircle) plannedCircle.className = 'circle' + (semId ? ' planned' : '');
-    }
+  const normalizedSemId = normalizeSemesterId(semId);
+
+  if (normalizedSemId === '') {
+    delete PLAN[code];
+  } else {
+    PLAN[code] = normalizedSemId;
   }
+
+  // Recalculate the state every single time a semester is assigned or moved.
+  // Past semester => taken. Current/future semester => planned only.
+  if (!normalizedSemId) {
+    if (ST[code] === 'taken') delete ST[code];
+  } else if (isPastSemesterId(normalizedSemId)) {
+    ST[code] = 'taken';
+  } else {
+    delete ST[code];
+  }
+
+  saveState();
+
+  // update the select styling in the courses view immediately
+  const row = document.querySelector(`.course-row[data-code="${CSS.escape(code)}"]`);
+  if (row) {
+    const sel = row.querySelector('.sem-select');
+    if (sel) {
+      sel.value = normalizedSemId;
+      sel.className = 'sem-select' + (normalizedSemId ? ' assigned' : '');
+    }
+    const circles = row.querySelectorAll('.circle');
+    const takenCircle = circles[0];
+    const progCircle = circles[1];
+    const plannedCircle = circles[2];
+    const skipCircle = circles[3];
+
+    const state = ST[code] || 'none';
+    if (takenCircle) takenCircle.className = 'circle' + (state === 'taken' ? ' taken' : '');
+    if (progCircle) progCircle.className = 'circle' + (state === 'progress' ? ' progress' : '');
+    if (plannedCircle) plannedCircle.className = 'circle' + (normalizedSemId && state !== 'taken' ? ' planned' : '');
+    if (skipCircle) skipCircle.className = 'circle' + (state === 'skip' ? ' skip' : '');
+  }
+
+  renderSections();
+  renderPlan();
   updateStats();
+  if (VIEW === 'insights') renderInsights();
 }
 
 function setView(v) {
   VIEW = v;
   document.getElementById('view-btn-courses').classList.toggle('active', v === 'courses');
   document.getElementById('view-btn-plan').classList.toggle('active', v === 'plan');
+  document.getElementById('view-btn-insights').classList.toggle('active', v === 'insights');
   document.getElementById('sections').style.display = v === 'courses' ? '' : 'none';
   document.getElementById('plan-view').style.display = v === 'plan' ? '' : 'none';
+  document.getElementById('insights-view').style.display = v === 'insights' ? '' : 'none';
   document.getElementById('search-wrap').style.display = v === 'courses' ? '' : 'none';
   document.getElementById('search-count').style.display = v === 'courses' ? '' : 'none';
   if (v === 'plan') renderPlan();
+  if (v === 'insights') renderInsights();
+}
+
+function nearestMondayToDate(year, monthIndex, day) {
+  const target = new Date(year, monthIndex, day);
+  const candidates = [];
+  for (let offset = -3; offset <= 3; offset++) {
+    const d = new Date(year, monthIndex, day + offset);
+  }
+  let best = null;
+  for (let offset = -3; offset <= 3; offset++) {
+    const d = new Date(year, monthIndex, day + offset);
+    if (d.getDay() === 1) {
+      const diff = Math.abs(d.getTime() - target.getTime());
+      if (!best || diff < best.diff) best = { date: d, diff };
+    }
+  }
+  return best ? best.date : target;
+}
+
+function getSpringStartDate(year) {
+  const exact = {
+    2025: new Date(2025, 0, 13),
+    2026: new Date(2026, 0, 12),
+    2027: new Date(2027, 0, 19),
+    2028: new Date(2028, 0, 18)
+  };
+  return exact[year] || nearestMondayToDate(year, 0, 15);
+}
+
+function getFallStartDate(year) {
+  const exact = {
+    2025: new Date(2025, 7, 25),
+    2026: new Date(2026, 7, 24),
+    2027: new Date(2027, 7, 30),
+    2028: new Date(2028, 7, 28)
+  };
+  return exact[year] || nearestMondayToDate(year, 7, 25);
+}
+
+function getJTermStartDate(year) {
+  return new Date(year, 0, 2);
+}
+
+function getSummerStartDate(year) {
+  return new Date(year, 4, 16);
+}
+
+function getCurrentSemester() {
+  const now = new Date();
+  const year = now.getFullYear();
+
+  const springStart = getSpringStartDate(year);
+  const summerStart = getSummerStartDate(year);
+  const fallStart = getFallStartDate(year);
+
+  if (now >= fallStart) return { term: 'fall', year };
+  if (now >= summerStart) return { term: 'sum', year };
+  if (now >= springStart) return { term: 'spr', year };
+  if (now >= getJTermStartDate(year)) return { term: 'jterm', year };
+
+  return { term: 'fall', year: year - 1 };
+}
+
+function semesterSortValue(sem) {
+  const termOrder = { jterm: 0, spr: 1, sum: 2, fall: 3 };
+  return sem.year * 10 + termOrder[sem.term];
+}
+
+function semesterId(term, year) {
+  return `${term}-${year}`;
+}
+
+function normalizeSemesterId(semId) {
+  if (!semId) return '';
+  const raw = String(semId).trim();
+  if (!raw) return '';
+  const direct = SEMESTERS.find(s => s.id === raw);
+  if (direct) return direct.id;
+
+  const labelMatch = SEMESTERS.find(s => s.label.toLowerCase() === raw.toLowerCase());
+  if (labelMatch) return labelMatch.id;
+
+  const m = raw.toLowerCase().match(/^(summer|sum|fall|j\-?term|jterm|spring|spr)[\s\-_]+(\d{4})$/);
+  if (!m) return raw;
+  let term = m[1];
+  const year = m[2];
+  if (term === 'summer') term = 'sum';
+  else if (term === 'spring') term = 'spr';
+  else if (term === 'j-term' || term === 'jterm') term = 'jterm';
+  return `${term}-${year}`;
+}
+
+function isPastSemesterId(semId) {
+  const normalized = normalizeSemesterId(semId);
+  const sem = SEMESTERS.find(s => s.id === normalized);
+  if (!sem) return false;
+  return semesterSortValue(sem) < semesterSortValue(getCurrentSemester());
+}
+
+function toggleSemesterCollapse(id) {
+  semCollapsed[id] = !semCollapsed[id];
+  saveState();
+  if (VIEW === 'plan') renderPlan();
 }
 
 function semesterOptionsHtml(currentSemId) {
+  const normalizedCurrent = normalizeSemesterId(currentSemId);
   return SEMESTERS.map(s =>
-    `<option value="${s.id}" ${currentSemId === s.id ? 'selected' : ''}>${s.label}</option>`
+    `<option value="${s.id}" ${normalizedCurrent === s.id ? 'selected' : ''}>${s.label}</option>`
   ).join('');
 }
 
@@ -1718,69 +2290,189 @@ function setPlanInfo(code, field, value) {
   saveState();
 }
 
+
+function getPrimarySemesters() {
+  return SEMESTERS.filter(s => s.term === 'fall' || s.term === 'spr');
+}
+
+function getSemestersRemainingFromNow() {
+  const current = getCurrentSemester();
+  return SEMESTERS.filter(s => semesterSortValue(s) >= semesterSortValue(current));
+}
+
+function getPrimarySemestersRemainingFromNow() {
+  const current = getCurrentSemester();
+  return getPrimarySemesters().filter(s => semesterSortValue(s) >= semesterSortValue(current));
+}
+
+function computeInsightData() {
+  const allCourses = SECTIONS.flatMap(sec => sec.courses);
+  const current = getCurrentSemester();
+  const majorTotals = computeTotals();
+  const allTotals = computeAllTotals();
+
+  const majorRemaining = Math.max(0, 67 - majorTotals.taken);
+  const gradRemaining = Math.max(0, 120 - allTotals.taken);
+
+  const remainingPlannableCourses = allCourses.filter(c => (ST[c.code] || 'none') !== 'taken' && (ST[c.code] || 'none') !== 'skip');
+  const remainingMajorCourses = allCourses.filter(c => !c.noCount && (ST[c.code] || 'none') !== 'taken' && (ST[c.code] || 'none') !== 'skip');
+
+  const remainingTerms = getSemestersRemainingFromNow();
+  const remainingPrimaryTerms = getPrimarySemestersRemainingFromNow();
+
+  const avgMajorPerRemainingTerm = remainingTerms.length ? (majorRemaining / remainingTerms.length) : 0;
+  const avgGradPerRemainingTerm = remainingTerms.length ? (gradRemaining / remainingTerms.length) : 0;
+  const avgMajorPerPrimaryTerm = remainingPrimaryTerms.length ? (majorRemaining / remainingPrimaryTerms.length) : 0;
+  const avgGradPerPrimaryTerm = remainingPrimaryTerms.length ? (gradRemaining / remainingPrimaryTerms.length) : 0;
+
+  const bySemester = SEMESTERS.map(sem => {
+    const courses = allCourses.filter(c => PLAN[c.code] === sem.id);
+    const credits = courses.reduce((a, c) => a + c.cr, 0);
+    return { sem, courses, credits };
+  });
+
+  const futureBySemester = bySemester.filter(x => semesterSortValue(x.sem) >= semesterSortValue(current));
+  const plannedFutureCredits = futureBySemester.reduce((a, x) => a + x.credits, 0);
+  const biggestLoad = bySemester.reduce((best, x) => x.credits > best.credits ? x : best, { sem: null, credits: -1, courses: [] });
+  const emptiesAhead = futureBySemester.filter(x => x.credits === 0).length;
+  const assignedCourses = remainingPlannableCourses.filter(c => PLAN[c.code]).length;
+  const unassignedCourses = remainingPlannableCourses.filter(c => !PLAN[c.code]).length;
+
+  return {
+    current,
+    majorRemaining,
+    gradRemaining,
+    remainingTerms,
+    remainingPrimaryTerms,
+    remainingPlannableCourses,
+    remainingMajorCourses,
+    avgMajorPerRemainingTerm,
+    avgGradPerRemainingTerm,
+    avgMajorPerPrimaryTerm,
+    avgGradPerPrimaryTerm,
+    plannedFutureCredits,
+    biggestLoad,
+    emptiesAhead,
+    assignedCourses,
+    unassignedCourses
+  };
+}
+
+function renderInsights() {
+  const container = document.getElementById('insights-view');
+  const d = computeInsightData();
+
+  const biggestLoadLabel = d.biggestLoad && d.biggestLoad.sem ? `${d.biggestLoad.sem.label} · ${d.biggestLoad.credits} cr` : 'None yet';
+  const majorPerPrimary = d.avgMajorPerPrimaryTerm ? d.avgMajorPerPrimaryTerm.toFixed(1) : '0.0';
+  const gradPerPrimary = d.avgGradPerPrimaryTerm ? d.avgGradPerPrimaryTerm.toFixed(1) : '0.0';
+  const majorPerTerm = d.avgMajorPerRemainingTerm ? d.avgMajorPerRemainingTerm.toFixed(1) : '0.0';
+  const gradPerTerm = d.avgGradPerRemainingTerm ? d.avgGradPerRemainingTerm.toFixed(1) : '0.0';
+
+  container.innerHTML = `
+    <div class="insights-grid">
+      <div class="insight-card">
+        <div class="insight-kicker">On-track pace</div>
+        <div class="insight-value">${majorPerPrimary}</div>
+        <div class="insight-sub">Major credits needed per <strong>Fall/Spring semester</strong> from now to finish the 67-credit biology major. If you spread it across every remaining term including summer and J-Term, that drops to <strong>${majorPerTerm}</strong> credits per term.</div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-kicker">Graduation pace</div>
+        <div class="insight-value">${gradPerPrimary}</div>
+        <div class="insight-sub">Total credits needed per <strong>Fall/Spring semester</strong> to reach 120 credits. Across every remaining term, that is <strong>${gradPerTerm}</strong> credits per term.</div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-kicker">Semesters left from now</div>
+        <div class="insight-value">${d.remainingTerms.length}</div>
+        <div class="insight-sub"><strong>${d.remainingPrimaryTerms.length}</strong> primary semesters remain counting Fall and Spring only. Pace uses today’s date, but your Semester Plan tab now shows your full timeline from start to graduation.</div>
+      </div>
+
+      <div class="insight-card">
+        <div class="insight-kicker">Still needing placement</div>
+        <div class="insight-value">${d.unassignedCourses}</div>
+        <div class="insight-sub">Courses not marked taken or skipped that are still unassigned to a semester. You currently have <strong>${d.assignedCourses}</strong> future courses placed on the calendar.</div>
+      </div>
+
+      <div class="insight-card insight-span-2">
+        <div class="insight-kicker">Planner snapshot</div>
+        <div class="insight-list">
+          <div class="insight-row"><span>Major credits still not completed</span><strong>${d.majorRemaining}</strong></div>
+          <div class="insight-row"><span>Total credits still not completed</span><strong>${d.gradRemaining}</strong></div>
+          <div class="insight-row"><span>Remaining major courses not yet completed or skipped</span><strong>${d.remainingMajorCourses.length}</strong></div>
+          <div class="insight-row"><span>Remaining total courses not yet completed or skipped</span><strong>${d.remainingPlannableCourses.length}</strong></div>
+          <div class="insight-row"><span>Credits currently planned in future semesters</span><strong>${d.plannedFutureCredits}</strong></div>
+          <div class="insight-row"><span>Heaviest planned semester</span><strong>${biggestLoadLabel}</strong></div>
+          <div class="insight-row"><span>Future semesters with nothing assigned yet</span><strong>${d.emptiesAhead}</strong></div>
+        </div>
+      </div>
+    </div>`;
+}
+
 function renderPlan() {
   const container = document.getElementById('plan-view');
 
-  // gather all courses
   const allCourses = SECTIONS.flatMap(sec => sec.courses);
-
   let html = '';
 
-  // semesters that have at least one course, or all of them
   SEMESTERS.forEach(sem => {
-    const courses = allCourses.filter(c => PLAN[c.code] === sem.id);
+    const courses = allCourses.filter(c => normalizeSemesterId(PLAN[c.code]) === sem.id);
     const totalCr = courses.reduce((a, c) => a + c.cr, 0);
+    const isCollapsed = !!semCollapsed[sem.id];
 
     html += `<div class="sem-card">
-      <div class="sem-card-header">
+      <div class="sem-card-header" onclick="toggleSemesterCollapse('${sem.id}')">
+        <span class="sem-card-chevron${isCollapsed ? ' collapsed' : ''}">▾</span>
         <span class="sem-card-dot" style="background:${sem.color}"></span>
         <span class="sem-card-title">${sem.label}</span>
         <span class="sem-card-cr">${totalCr} cr</span>
       </div>`;
 
-    if (courses.length === 0) {
-      html += `<div class="sem-empty">No courses added yet — assign courses from the Courses view.</div>`;
-    } else {
-      courses.forEach(c => {
-        const st = ST[c.code];
-        const info = PLAN_INFO[c.code] || {};
-        html += `<div class="sem-course-row">
-          <span class="sem-status-dot ${st}"></span>
-          <div class="sem-course-info">
-            <div class="sem-course-code">${c.code}</div>
-            <div class="sem-course-name">${c.name}</div>
-            <div class="sem-course-details">
-              <input class="sem-info-input" type="text" placeholder="⏰ Time" value="${info.time || ''}" onchange="setPlanInfo('${c.code}', 'time', this.value)">
-              <select class="sem-info-input" onchange="setPlanInfo('${c.code}', 'location', this.value)">
-                <option value="">📍 Campus</option>
-                <option value="Lake Shore" ${info.location === 'Lake Shore' ? 'selected' : ''}>🌊 Lake Shore</option>
-                <option value="Gold Coast" ${info.location === 'Gold Coast' ? 'selected' : ''}>🏙️ Gold Coast</option>
-                <option value="Online" ${info.location === 'Online' ? 'selected' : ''}>💻 Online</option>
-              </select>
-              <input class="sem-info-input" type="text" placeholder="👤 Professor" value="${info.prof || ''}" onchange="setPlanInfo('${c.code}', 'prof', this.value)">
+    if (!isCollapsed) {
+      if (courses.length === 0) {
+        html += `<div class="sem-empty">No courses added yet — assign courses from the Courses view.</div>`;
+      } else {
+        courses.forEach(c => {
+          const st = ST[c.code] || 'none';
+          const info = PLAN_INFO[c.code] || {};
+          html += `<div class="sem-course-row">
+            <span class="sem-status-dot ${st}"></span>
+            <div class="sem-course-info">
+              <div class="sem-course-code">${c.code}</div>
+              <div class="sem-course-name">${c.name}</div>
+              <div class="sem-course-details">
+                <input class="sem-info-input" type="text" placeholder="⏰ Time" value="${info.time || ''}" onchange="setPlanInfo('${c.code}', 'time', this.value)">
+                <select class="sem-info-input" onchange="setPlanInfo('${c.code}', 'location', this.value)">
+                  <option value="">📍 Campus</option>
+                  <option value="Lake Shore" ${info.location === 'Lake Shore' ? 'selected' : ''}>🌊 Lake Shore</option>
+                  <option value="Gold Coast" ${info.location === 'Gold Coast' ? 'selected' : ''}>🏙️ Gold Coast</option>
+                  <option value="Online" ${info.location === 'Online' ? 'selected' : ''}>💻 Online</option>
+                </select>
+                <input class="sem-info-input" type="text" placeholder="👤 Professor" value="${info.prof || ''}" onchange="setPlanInfo('${c.code}', 'prof', this.value)">
+              </div>
             </div>
-          </div>
-          <div class="sem-course-cr">${c.cr}</div>
-          <button class="sem-remove" onclick="setSemester('${c.code}', '')" title="Remove from semester">✕</button>
-        </div>`;
-      });
+            <div class="sem-course-cr">${c.cr}</div>
+            <button class="sem-remove" onclick="setSemester('${c.code}', ''); event.stopPropagation();" title="Remove from semester">✕</button>
+          </div>`;
+        });
+      }
     }
 
     html += `</div>`;
   });
 
-  // unassigned courses
   const unassigned = allCourses.filter(c => !PLAN[c.code] && ST[c.code] !== 'taken' && ST[c.code] !== 'skip');
   if (unassigned.length > 0) {
     html += `<div class="sem-card">
       <div class="sem-card-header">
+        <span class="sem-card-chevron collapsed" style="visibility:hidden">▾</span>
         <span class="sem-card-dot" style="background:var(--gdot)"></span>
         <span class="sem-card-title" style="color:var(--t3)">Unassigned</span>
         <span class="sem-card-cr">${unassigned.length} courses</span>
       </div>`;
     unassigned.forEach(c => {
       html += `<div class="sem-course-row">
-        <span class="sem-status-dot ${ST[c.code]}"></span>
+        <span class="sem-status-dot ${ST[c.code] || 'none'}"></span>
         <div class="sem-course-info">
           <div class="sem-course-code">${c.code}</div>
           <div class="sem-course-name">${c.name}</div>
@@ -1877,6 +2569,7 @@ function toggleCountProg() {
   btn.classList.toggle('on', COUNT_PROG);
   document.getElementById('prog-toggle-label').textContent = COUNT_PROG ? 'counting planned' : 'count planned';
   updateStats();
+  if (VIEW === 'insights') renderInsights();
   saveState();
 }
 
@@ -1948,6 +2641,7 @@ function setStatus(code, newSt) {
   }
 
   updateStats();
+  if (VIEW === 'insights') renderInsights();
   saveState();
 }
 
@@ -2058,7 +2752,7 @@ function renderSections() {
               <div class="circle-label">In progress</div>
             </div>
             <div class="circle-wrap no-click">
-              <div class="circle${PLAN[c.code] ? ' planned' : ''}"></div>
+              <div class="circle${PLAN[c.code] && st !== 'taken' ? ' planned' : ''}"></div>
               <div class="circle-label">Planned</div>
             </div>
             <div class="circle-wrap" onclick="setStatus('${c.code}','skip')">
@@ -2093,11 +2787,258 @@ function renderSections() {
   updateStats();
 }
 
+// ── TOUR SYSTEM ──
+const TOUR_STEPS = [
+  {
+    icon: null,
+    crest: true,
+    title: "Biology BS — Degree Planner",
+    subtitle: "Loyola University Chicago · Track your path to graduation",
+    body: `Enter your name and expected graduation term to personalize your planner, then we'll walk you through every feature.`,
+    hasNameInput: true,
+    primaryBtn: "Let's Go →",
+    skipBtn: "Skip tour"
+  },
+  {
+    icon: "📊",
+    title: "Credit Trackers",
+    body: `At the top you'll see two live counters — one for your <strong>Major Requirements (67 cr)</strong> and one for <strong>Graduation (120 cr)</strong>. They update in real time as you mark courses. Toggle <em>"counting planned"</em> to include in-progress and planned courses in your count.`,
+    primaryBtn: "Next →",
+    skipBtn: "Skip tour"
+  },
+  {
+    icon: "⭕",
+    title: "The Four Circles",
+    body: `Every course has four clickable circles. Tap one to set your status:`,
+    hasCircleDemo: true,
+    primaryBtn: "Next →",
+    skipBtn: "Skip tour"
+  },
+  {
+    icon: "📅",
+    title: "Semester Planner",
+    body: `Click <strong>"+ Add to semester"</strong> on any course to assign it to a specific semester — Summer 2026 through Summer 2029. You can also log the time, campus (Lake Shore, Gold Coast, or Online), and professor name.`,
+    primaryBtn: "Next →",
+    skipBtn: "Skip tour"
+  },
+  {
+    icon: "🔍",
+    title: "Search & Filters",
+    body: `Use the search bar to find any course by name or code. Filter by category (Bio Core, Chemistry, Math, etc.) or by status (Taken, In Progress, Planned). Use the <strong>Courses / Semester Plan</strong> toggle to switch views.`,
+    primaryBtn: "Next →",
+    skipBtn: "Skip tour"
+  },
+  {
+    icon: "📖",
+    title: "Course Info",
+    body: `Every course has an <strong>"About this course"</strong> button that opens a description and a direct link to the LUC catalog. Great for checking prereqs and understanding what you're signing up for.`,
+    primaryBtn: "Next →",
+    skipBtn: "Skip tour"
+  },
+  {
+    icon: "✅",
+    title: "Mark Your Completed Courses",
+    body: `Ready to get started? Click <strong>"Mark my courses"</strong> to close this tour and start marking the courses you've already taken or are currently in. Or skip and explore on your own — your progress saves automatically.`,
+    primaryBtn: "Mark my courses →",
+    skipBtn: "Skip & explore"
+  }
+];
+
+let tourStep = 0;
+let tourName = '';
+
+function renderTour() {
+  const step = TOUR_STEPS[tourStep];
+  const total = TOUR_STEPS.length;
+  const dots = Array.from({length: total}, (_, i) => {
+    const cls = i < tourStep ? 'done' : i === tourStep ? 'active' : '';
+    return `<div class="tour-dot ${cls}"></div>`;
+  }).join('');
+
+  let inner = '';
+
+  if (step.crest) {
+    inner += `<div class="tour-crest">L</div>`;
+    inner += `<h2>${step.title}</h2>`;
+    inner += `<p style="margin-bottom:12px;color:var(--t3);font-size:12px;">${step.subtitle}</p>`;
+    inner += `<div style="background:#FEF3E2;border:1px solid #F5C97A;border-radius:8px;padding:10px 14px;font-size:12px;color:#7A4F00;text-align:left;margin-bottom:16px;line-height:1.5;">📌 <strong>This planner is specifically designed for Biology BS students at Loyola University Chicago.</strong> Course requirements and credit totals reflect the LUC Biology BS curriculum.</div>`;
+    inner += `<p>${step.body}</p>`;
+    inner += `<input id="tour-name-input" type="text" placeholder="Your name (optional)" maxlength="40">`;
+    inner += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:4px;text-align:left">
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--t2);display:block;margin-bottom:6px;">Graduation Year</label>
+        <select id="tour-grad-year" style="width:100%;padding:10px 14px;border:1px solid var(--br);border-radius:8px;background:var(--bg);color:var(--t1);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;">
+          <option value="">Select year…</option>
+          ${[2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036].map(y => `<option value="${y}">${y}</option>`).join('')}
+        </select>
+      </div>
+      <div>
+        <label style="font-size:12px;font-weight:600;color:var(--t2);display:block;margin-bottom:6px;">Graduation Term</label>
+        <select id="tour-grad-term" style="width:100%;padding:10px 14px;border:1px solid var(--br);border-radius:8px;background:var(--bg);color:var(--t1);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;">
+          <option value="fall">Fall</option>
+          <option value="spr">Spring</option>
+        </select>
+      </div>
+    </div>`;
+  } else {
+    inner += `<span class="tour-icon">${step.icon}</span>`;
+    inner += `<h2>${step.title}</h2>`;
+    inner += `<p>${step.body}</p>`;
+  }
+
+  if (step.hasCircleDemo) {
+    inner += `<div class="tour-demo">
+      <div class="tour-demo-circles">
+        <div class="tour-demo-circle-wrap"><div class="tour-demo-circle green"></div><div class="tour-demo-label">Taken</div></div>
+        <div class="tour-demo-circle-wrap"><div class="tour-demo-circle amber"></div><div class="tour-demo-label">In Progress</div></div>
+        <div class="tour-demo-circle-wrap"><div class="tour-demo-circle blue"></div><div class="tour-demo-label">Planned</div></div>
+        <div class="tour-demo-circle-wrap"><div class="tour-demo-circle gray"></div><div class="tour-demo-label">Not Taken</div></div>
+      </div>
+    </div>`;
+  }
+
+  inner += `<div class="tour-progress">${dots}</div>`;
+  inner += `<div class="tour-btns">
+    <button class="tour-btn-secondary" onclick="skipTour()">${step.skipBtn}</button>
+    <button class="tour-btn-primary" onclick="nextTour()">${step.primaryBtn}</button>
+  </div>`;
+
+  document.getElementById('tour-content').innerHTML = inner;
+
+  if (step.hasNameInput) {
+    if (tourName) document.getElementById('tour-name-input').value = tourName;
+    const savedGradYear = localStorage.getItem('luc-planner-grad-year');
+    const savedGradTerm = localStorage.getItem('luc-planner-grad-term') || 'fall';
+    const gy = document.getElementById('tour-grad-year');
+    const gt = document.getElementById('tour-grad-term');
+    if (gy && savedGradYear) gy.value = savedGradYear;
+    if (gt) gt.value = savedGradTerm;
+  }
+}
+
+function nextTour() {
+  if (tourStep === 0) {
+    const inp = document.getElementById('tour-name-input');
+    if (inp) {
+      tourName = inp.value.trim();
+      if (tourName) {
+        document.getElementById('page-subtitle').textContent = tourName + ' · Biology BS · LUC';
+        try { localStorage.setItem('luc-planner-name', tourName); } catch(e) {}
+      }
+    }
+    const gradYearSel = document.getElementById('tour-grad-year');
+    const gradTermSel = document.getElementById('tour-grad-term');
+    const gradYearVal = gradYearSel ? parseInt(gradYearSel.value) || 0 : 0;
+    const gradTermVal = gradTermSel ? (gradTermSel.value || 'fall') : 'fall';
+    if (gradYearVal) {
+      try {
+        localStorage.setItem('luc-planner-grad-year', String(gradYearVal));
+        localStorage.setItem('luc-planner-grad-term', gradTermVal);
+      } catch(e) {}
+      SEMESTERS.length = 0;
+      buildSemesters(gradYearVal, gradTermVal).forEach(s => SEMESTERS.push(s));
+    }
+  }
+  tourStep++;
+  if (tourStep >= TOUR_STEPS.length) {
+    dismissTour();
+  } else {
+    renderTour();
+  }
+}
+
+function skipTour() {
+  if (tourStep === 0) {
+    const inp = document.getElementById('tour-name-input');
+    if (inp) {
+      tourName = inp.value.trim();
+      if (tourName) {
+        document.getElementById('page-subtitle').textContent = tourName + ' · Biology BS · LUC';
+        try { localStorage.setItem('luc-planner-name', tourName); } catch(e) {}
+      }
+    }
+    const gradYearSel = document.getElementById('tour-grad-year');
+    const gradTermSel = document.getElementById('tour-grad-term');
+    const gradYearVal = gradYearSel ? parseInt(gradYearSel.value) || 0 : 0;
+    const gradTermVal = gradTermSel ? (gradTermSel.value || 'fall') : 'fall';
+    if (gradYearVal) {
+      try {
+        localStorage.setItem('luc-planner-grad-year', String(gradYearVal));
+        localStorage.setItem('luc-planner-grad-term', gradTermVal);
+      } catch(e) {}
+      SEMESTERS.length = 0;
+      buildSemesters(gradYearVal, gradTermVal).forEach(s => SEMESTERS.push(s));
+    }
+  }
+  dismissTour();
+}
+
+function dismissTour() {
+  document.getElementById('tour-overlay').style.display = 'none';
+  try { localStorage.setItem('luc-planner-welcomed', '1'); } catch(e) {}
+}
+
+// Init tour
+(function() {
+  try {
+    const welcomed = localStorage.getItem('luc-planner-welcomed');
+    const name = localStorage.getItem('luc-planner-name');
+    const gradYear = parseInt(localStorage.getItem('luc-planner-grad-year')) || 0;
+    const gradTerm = localStorage.getItem('luc-planner-grad-term') || 'fall';
+    if (name) document.getElementById('page-subtitle').textContent = name + ' · Biology BS · LUC';
+    SEMESTERS.length = 0;
+    (gradYear ? buildSemesters(gradYear, gradTerm) : buildSemesters(2029, 'fall')).forEach(s => SEMESTERS.push(s));
+    if (welcomed) {
+      document.getElementById('tour-overlay').style.display = 'none';
+    } else {
+      renderTour();
+    }
+  } catch(e) {
+    SEMESTERS.length = 0;
+    buildSemesters(2029, 'fall').forEach(s => SEMESTERS.push(s));
+    renderTour();
+  }
+})();
+
+function buildSemesters(gradYear, gradTerm = 'fall') {
+  const colors = { sum:'#2ca882', fall:'#BA7517', jterm:'#534AB7', spr:'#185FA5' };
+  const endYear = Number(gradYear) || 2029;
+  const normalizedGradTerm = String(gradTerm || 'fall').toLowerCase();
+  const endTerm = (normalizedGradTerm === 'spring' || normalizedGradTerm === 'spr') ? 'spr' : 'fall';
+  const startYear = Math.max(2025, endYear - 4);
+  const all = [];
+
+  for (let y = startYear; y <= endYear; y++) {
+    all.push({ id: semesterId('sum', y), label: `Summer ${y}`, color: colors.sum, term: 'sum', year: y });
+    all.push({ id: semesterId('fall', y), label: `Fall ${y}`, color: colors.fall, term: 'fall', year: y });
+    all.push({ id: semesterId('jterm', y + 1), label: `J-Term ${y + 1}`, color: colors.jterm, term: 'jterm', year: y + 1 });
+    all.push({ id: semesterId('spr', y + 1), label: `Spring ${y + 1}`, color: colors.spr, term: 'spr', year: y + 1 });
+  }
+
+  const startSem = { term: 'sum', year: startYear };
+  const endSem = { term: endTerm, year: endYear };
+  return all.filter(sem => {
+    const v = semesterSortValue(sem);
+    return v >= semesterSortValue(startSem) && v <= semesterSortValue(endSem);
+  });
+}
+
+function showWelcome() {
+  const el = document.getElementById('tour-overlay');
+  if (el) { el.style.display = 'flex'; tourStep = 0; renderTour(); }
+}
+
 function masterReset() {
+
   if (!confirm('⚠️ Are you sure you want to reset ALL data? This cannot be undone.')) return;
   if (!confirm('This will erase every circle, semester assignment, and course detail you have entered. Are you absolutely sure?')) return;
   if (!confirm('Last chance — click OK to permanently wipe all your planner data.')) return;
   localStorage.removeItem(LS_KEY);
+  localStorage.removeItem('luc-planner-welcomed');
+  localStorage.removeItem('luc-planner-name');
+  localStorage.removeItem('luc-planner-grad');
+  localStorage.removeItem('luc-planner-grad-year');
+  localStorage.removeItem('luc-planner-grad-term');
   location.reload();
 }
 
@@ -2109,6 +3050,13 @@ if (_tog) {
 }
 
 renderSections();
+
+function isPastSemester(semKey) {
+  const sem = parseSemesterKey ? parseSemesterKey(semKey) : semKey;
+  const current = getCurrentSemester();
+  return compareSemester(sem, current) < 0;
+}
+
 </script>
 </body>
 </html>
