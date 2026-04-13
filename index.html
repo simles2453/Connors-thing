@@ -472,6 +472,72 @@
     font-style: italic;
   }
 
+  /* ── CORE TRACKER ── */
+  .core-tracker {
+    margin: 10px 14px 2px;
+    padding: 10px 14px;
+    border: 1.5px dashed var(--br);
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .core-tracker-title {
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--t3);
+    margin-bottom: 4px;
+    font-style: normal;
+  }
+
+  .core-req-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-style: normal;
+  }
+
+  .core-req-icon {
+    font-size: 12px;
+    flex-shrink: 0;
+    width: 16px;
+    text-align: center;
+  }
+
+  .core-req-label { color: var(--t2); flex: 1; min-width: 80px; }
+  .core-req-label.done { color: var(--green); font-weight: 600; }
+  .core-req-label.partial { color: var(--amber); font-weight: 500; }
+  .core-req-label.none { color: var(--t3); }
+
+  .core-req-bar-wrap {
+    flex: 2;
+    height: 5px;
+    background: var(--gdot);
+    border-radius: 99px;
+    overflow: hidden;
+    min-width: 60px;
+  }
+
+  .core-req-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .core-req-fraction {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px;
+    color: var(--t3);
+    white-space: nowrap;
+    flex-shrink: 0;
+    width: 28px;
+    text-align: right;
+  }
+
   .section-body { padding-bottom: 4px; }
 
   /* ── COURSE ROW ── */
@@ -1704,6 +1770,49 @@ function renderPlan() {
   container.innerHTML = html;
 }
 
+function coreTrackerHtml() {
+  const s = code => ST[code] || 'none';
+  const done = code => s(code) === 'taken';
+  const prog = code => s(code) === 'progress';
+
+  function bar(label, completed, total) {
+    const pct = Math.round((completed / total) * 100);
+    const color = completed === total ? 'var(--green)' : completed > 0 ? 'var(--amber)' : 'var(--gdot)';
+    const labelCls = completed === total ? 'done' : completed > 0 ? 'partial' : 'none';
+    return `<div class="core-req-row">
+      <span class="core-req-label ${labelCls}">${label}</span>
+      <div class="core-req-bar-wrap">
+        <div class="core-req-bar-fill" style="width:${pct}%;background:${color}"></div>
+      </div>
+      <span class="core-req-fraction">${completed}/${total}</span>
+    </div>`;
+  }
+
+  function val(code) {
+    return done(code) ? 1 : prog(code) ? 0.5 : 0;
+  }
+
+  // Writing: 2 needed
+  const wiDone = (done('UCWR 110') ? 1 : prog('UCWR 110') ? 0.5 : 0) + (done('WI 2') ? 1 : prog('WI 2') ? 0.5 : 0);
+  // Theology: 2 needed
+  const theoDone = (done('THEO 107') ? 1 : prog('THEO 107') ? 0.5 : 0) + (done('THEO 2XX') ? 1 : prog('THEO 2XX') ? 0.5 : 0);
+  // Social Science: 1 needed (either counts)
+  const ssDone = Math.min(1, (done('SOCL 101') ? 1 : prog('SOCL 101') ? 0.5 : 0) + (done('PSYC 101') ? 1 : prog('PSYC 101') ? 0.5 : 0));
+
+  return `<div class="core-tracker">
+    <div class="core-tracker-title">Core Requirements Progress</div>
+    ${bar('UNIV 101', val('UNIV 101'), 1)}
+    ${bar('Writing Intensive', wiDone, 2)}
+    ${bar('Theology I & II', theoDone, 2)}
+    ${bar('Philosophy / Ethics', val('PHIL 181'), 1)}
+    ${bar('Social Science', ssDone, 1)}
+    ${bar('Fine Arts', val('FINE ART'), 1)}
+    ${bar('Historical Studies', val('HIST XXX'), 1)}
+    ${bar('Engaged Learning', val('ENGAGED'), 1)}
+    ${bar('Foreign Language', val('LANG 102'), 1)}
+  </div>`;
+}
+
 function onSearch(val) {
   SEARCH = val.trim().toLowerCase();
   document.getElementById('search-clear').classList.toggle('visible', SEARCH.length > 0);
@@ -1877,7 +1986,10 @@ function renderSections() {
           <div class="section-progress-bar-fill" style="width:${secPct}%;background:${sec.color}"></div>
         </div>`;
 
-      if (sec.note && !SEARCH) html += `<div class="section-note">${sec.note}</div>`;
+      if (sec.note && !SEARCH) {
+        if (sec.id === 'core') html += coreTrackerHtml();
+        else html += `<div class="section-note">${sec.note}</div>`;
+      }
 
       courses.forEach(c => {
         const st = ST[c.code];
