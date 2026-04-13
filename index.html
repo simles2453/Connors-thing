@@ -1408,21 +1408,38 @@ const SECTIONS = [
     title: 'University Core & Graduation Requirements',
     color: '#534AB7',
     total: null,
-    note: 'LUC requires: UNIV 101, two Writing Intensive courses, Theology I & II, Philosophy/Ethics, Social Science, Fine Arts, Historical Studies, Cultural Diversity, Natural Science, ≥1 Engaged Learning, and Foreign Language at 102-level or competency.',
+    note: 'LUC Core requires 16 courses (48 cr) across 10 knowledge areas, plus UNIV 101 and Engaged Learning.',
     courses: [
-      { code:'UNIV 101', name:'First-Year Experience', cr:1, s:'taken', grade:'P', tags:[], prereq:'None' },
-      { code:'UCWR 110', name:'Writing Intensive 1', cr:3, s:'taken', grade:'B+', tags:[], prereq:'None' },
-      { code:'THEO 107', name:'Theology I', cr:3, s:'taken', grade:'A−', tags:[], prereq:'None' },
-      { code:'SOCL 101', name:'Social Science — Sociology', cr:3, s:'taken', grade:'A', tags:[], prereq:'None' },
-      { code:'PSYC 101', name:'Social Science — Psychology', cr:3, s:'taken', grade:'A', tags:[], prereq:'None' },
-      { code:'PHIL 181', name:'Ethics (Philosophy/Ethics req)', cr:3, s:'progress', tags:[], prereq:'None' },
-      { code:'THEO 2XX', name:'Theology II', cr:3, s:'none', tags:[], prereq:'THEO 107' },
-      { code:'FINE ART', name:'Fine Arts Core', cr:3, s:'none', tags:[], prereq:'None' },
-      { code:'HIST XXX', name:'Historical Studies', cr:3, s:'none', tags:[], prereq:'None' },
-      { code:'CULT DIV', name:'Cultural Diversity', cr:3, s:'none', tags:[], prereq:'None' },
-      { code:'WI 2', name:'Writing Intensive 2', cr:3, s:'none', tags:[], prereq:'UCWR 110 first' },
-      { code:'ENGAGED', name:'Engaged Learning', cr:0, s:'none', tags:['Verify w/ advisor'], prereq:'Varies' },
-      { code:'LANG 102', name:'Foreign Language 102', cr:3, s:'none', tags:['Or competency exam'], prereq:'Placement or LANG 101' },
+      // UNIV 101
+      { code:'UNIV 101',  name:'First-Year Experience',                        cr:1, s:'taken',    tags:[], prereq:'None' },
+      // Engaged Learning
+      { code:'ENGAGED',  name:'Engaged Learning',                              cr:3, s:'none',    tags:['Verify w/ advisor'], prereq:'Varies' },
+      // College Writing Seminar (1 course, 3 cr)
+      { code:'UCWR 110', name:'College Writing Seminar',                       cr:3, s:'taken',    tags:['Writing Seminar'], prereq:'None' },
+      // Ethical Knowledge & Inquiry (1 course, 3 cr)
+      { code:'PHIL 181', name:'Ethics — Ethical Knowledge & Inquiry',          cr:3, s:'progress', tags:['Ethical Knowledge'], prereq:'None' },
+      // Artistic Knowledge & Inquiry (1 course, 3 cr)
+      { code:'ARTS XXX', name:'Artistic Knowledge & Inquiry',                  cr:3, s:'none',    tags:['Artistic Knowledge'], prereq:'None' },
+      // Quantitative Knowledge & Inquiry (1 course, 3 cr)
+      { code:'QANT XXX', name:'Quantitative Knowledge & Inquiry',              cr:3, s:'none',    tags:['Quantitative Knowledge'], prereq:'None' },
+      // Historical Knowledge & Inquiry (2 courses, 6 cr)
+      { code:'HIST XXX', name:'Historical Knowledge & Inquiry I',              cr:3, s:'none',    tags:['Historical Knowledge'], prereq:'None' },
+      { code:'HIST XX2', name:'Historical Knowledge & Inquiry II',             cr:3, s:'none',    tags:['Historical Knowledge'], prereq:'None' },
+      // Literary Knowledge & Inquiry (2 courses, 6 cr)
+      { code:'LITR XXX', name:'Literary Knowledge & Inquiry I',                cr:3, s:'none',    tags:['Literary Knowledge'], prereq:'None' },
+      { code:'LITR XX2', name:'Literary Knowledge & Inquiry II',               cr:3, s:'none',    tags:['Literary Knowledge'], prereq:'None' },
+      // Philosophical Knowledge & Inquiry (2 courses, 6 cr)
+      { code:'PHIL XXX', name:'Philosophical Knowledge & Inquiry I',           cr:3, s:'none',    tags:['Philosophical Knowledge'], prereq:'None' },
+      { code:'PHIL XX2', name:'Philosophical Knowledge & Inquiry II',          cr:3, s:'none',    tags:['Philosophical Knowledge'], prereq:'None' },
+      // Scientific Knowledge & Inquiry (2 courses, 6 cr)
+      { code:'SCI XXX',  name:'Scientific Knowledge & Inquiry I',              cr:3, s:'none',    tags:['Scientific Knowledge'], prereq:'None' },
+      { code:'SCI XX2',  name:'Scientific Knowledge & Inquiry II',             cr:3, s:'none',    tags:['Scientific Knowledge'], prereq:'None' },
+      // Societal & Cultural Knowledge & Inquiry (2 courses, 6 cr)
+      { code:'SOCL 101', name:'Societal & Cultural Knowledge I — Sociology',   cr:3, s:'taken',    tags:['Societal & Cultural'], prereq:'None' },
+      { code:'PSYC 101', name:'Societal & Cultural Knowledge II — Psychology', cr:3, s:'taken',    tags:['Societal & Cultural'], prereq:'None' },
+      // Theological & Religious Knowledge & Inquiry (2 courses, 6 cr)
+      { code:'THEO 107', name:'Theological & Religious Knowledge I',           cr:3, s:'taken',    tags:['Theological & Religious'], prereq:'None' },
+      { code:'THEO 2XX', name:'Theological & Religious Knowledge II',          cr:3, s:'none',    tags:['Theological & Religious'], prereq:'THEO 107' },
     ]
   }
 ];
@@ -1533,14 +1550,24 @@ const DESCS = {
   'PHYS 122': 'Continuation of calculus-based Physics I. Electricity, magnetism, waves, and optics.',
   'PHYS 125': 'Algebra-based physics for life science students. Covers mechanics with emphasis on biological applications.',
   'PHYS 126': 'Continuation of Physics for Life Sciences I. Electricity, magnetism, and optics with biological applications.',
-  // Univ Core
+  'ENGAGED': 'Engaged Learning is a high-impact educational practice at LUC that connects classroom learning with real-world experience. Options include community-based learning, undergraduate research, internships, and study abroad. At least one Engaged Learning course totaling ≥3 credit hours is required for graduation. <strong style="color:#B93232;font-size:13px">⚠ Check with your advisor</strong>',
   'UNIV 101': 'First-Year Experience introducing students to Loyola\'s academic community, Jesuit educational values, campus resources, and strategies for academic success.',
-  'UCWR 110': 'First Writing Intensive course. Develops critical reading, research, argumentation, and academic writing skills through inquiry-based assignments.',
-  'THEO 107': 'Introduction to theological study and Christian faith in historical and cultural contexts. First of two required theology courses at LUC.',
-  'SOCL 101': 'Introduction to sociological thinking: social structures, institutions, inequality, culture, and how society shapes individual experience.',
-  'PSYC 101': 'Survey of psychology: biological bases, perception, learning, memory, development, personality, abnormal psychology, and social behavior.',
-  'PHIL 181': 'Introduction to ethics and moral philosophy. Examines major ethical theories — consequentialism, deontology, virtue ethics — and applies them to contemporary issues.',
-  'THEO 2XX': 'Second required theology course at LUC. Builds on THEO 107 to explore theological topics in greater depth.',
+  'UCWR 110': 'College Writing Seminar. Develops critical reading, research, argumentation, and academic writing skills through inquiry-based assignments.',
+  'THEO 107': 'Introduction to theological study and Christian faith in historical and cultural contexts. First of two required Theological & Religious Knowledge courses.',
+  'SOCL 101': 'Introduction to sociological thinking: social structures, institutions, inequality, culture, and how society shapes individual experience. Counts toward Societal & Cultural Knowledge.',
+  'PSYC 101': 'Survey of psychology: biological bases, perception, learning, memory, development, personality, abnormal psychology, and social behavior. Counts toward Societal & Cultural Knowledge.',
+  'PHIL 181': 'Introduction to ethics and moral philosophy. Examines major ethical theories and applies them to contemporary issues. Satisfies Ethical Knowledge & Inquiry requirement.',
+  'THEO 2XX': 'Second required Theological & Religious Knowledge course. Builds on THEO 107 to explore theological topics in greater depth.',
+  'ARTS XXX': 'Any approved Artistic Knowledge & Inquiry course. Covers visual arts, music, theatre, dance, or related disciplines. See advisor or LOCUS for approved course list.',
+  'QANT XXX': 'Any approved Quantitative Knowledge & Inquiry course. Covers mathematical reasoning, statistics, or quantitative analysis. See advisor or LOCUS for approved course list.',
+  'HIST XXX': 'First Historical Knowledge & Inquiry course. Two history courses totaling 6 credits are required. See advisor or LOCUS for approved course list.',
+  'HIST XX2': 'Second Historical Knowledge & Inquiry course. Two history courses totaling 6 credits are required. See advisor or LOCUS for approved course list.',
+  'LITR XXX': 'First Literary Knowledge & Inquiry course. Two literary courses totaling 6 credits are required. See advisor or LOCUS for approved course list.',
+  'LITR XX2': 'Second Literary Knowledge & Inquiry course. Two literary courses totaling 6 credits are required. See advisor or LOCUS for approved course list.',
+  'PHIL XXX': 'First Philosophical Knowledge & Inquiry course. Two philosophy courses totaling 6 credits are required. See advisor or LOCUS for approved course list.',
+  'PHIL XX2': 'Second Philosophical Knowledge & Inquiry course. Two philosophy courses totaling 6 credits are required. See advisor or LOCUS for approved course list.',
+  'SCI XXX':  'First Scientific Knowledge & Inquiry course. Your biology and chemistry courses may satisfy this requirement — confirm with your advisor.',
+  'SCI XX2':  'Second Scientific Knowledge & Inquiry course. Two science courses totaling 6 credits are required. Confirm with your advisor which courses apply.',
 };
 
 function showDesc(code, name) {
@@ -1548,7 +1575,7 @@ function showDesc(code, name) {
   const url = catalogUrl(code);
   document.getElementById('desc-modal-code').textContent = code;
   document.getElementById('desc-modal-name').textContent = name;
-  document.getElementById('desc-modal-text').textContent = desc || 'See the LUC catalog for the full course description.';
+  document.getElementById('desc-modal-text').innerHTML = desc || 'See the LUC catalog for the full course description.';
   const link = document.getElementById('desc-modal-link');
   if (url) { link.href = url; link.style.display = 'inline-block'; }
   else { link.style.display = 'none'; }
@@ -1626,10 +1653,11 @@ function tagClass(t) {
 }
 
 function catalogUrl(code) {
+  if (code === 'ENGAGED') return 'https://www.luc.edu/celts/programs/engagedlearning/';
   const parts = code.split(' ');
   const dept = parts[0].toLowerCase();
   const num = parts[1] || '';
-  const noCatalog = ['fine', 'cult', 'wi', 'engaged', 'lang'];
+  const noCatalog = ['fine', 'cult', 'wi', 'lang'];
   if (noCatalog.includes(dept)) return null;
   return `https://catalog.luc.edu/course-descriptions/${dept}/#:~:text=${encodeURIComponent(dept.toUpperCase() + ' ' + num)}`;
 }
@@ -1771,45 +1799,52 @@ function renderPlan() {
 }
 
 function coreTrackerHtml() {
-  const s = code => ST[code] || 'none';
-  const done = code => s(code) === 'taken';
-  const prog = code => s(code) === 'progress';
+  const done = code => (ST[code] || 'none') === 'taken';
+  const prog = code => (ST[code] || 'none') === 'progress';
+
+  function val(code) { return done(code) ? 1 : prog(code) ? 0.5 : 0; }
 
   function bar(label, completed, total) {
-    const pct = Math.round((completed / total) * 100);
-    const color = completed === total ? 'var(--green)' : completed > 0 ? 'var(--amber)' : 'var(--gdot)';
-    const labelCls = completed === total ? 'done' : completed > 0 ? 'partial' : 'none';
+    const pct   = Math.round((completed / total) * 100);
+    const color = completed >= total ? 'var(--green)' : completed > 0 ? 'var(--amber)' : 'var(--gdot)';
+    const cls   = completed >= total ? 'done' : completed > 0 ? 'partial' : 'none';
+    const disp  = completed % 1 === 0 ? completed : completed.toFixed(1);
     return `<div class="core-req-row">
-      <span class="core-req-label ${labelCls}">${label}</span>
+      <span class="core-req-label ${cls}">${label}</span>
       <div class="core-req-bar-wrap">
         <div class="core-req-bar-fill" style="width:${pct}%;background:${color}"></div>
       </div>
-      <span class="core-req-fraction">${completed}/${total}</span>
+      <span class="core-req-fraction">${disp}/${total}</span>
     </div>`;
   }
 
-  function val(code) {
-    return done(code) ? 1 : prog(code) ? 0.5 : 0;
-  }
-
-  // Writing: 2 needed
-  const wiDone = (done('UCWR 110') ? 1 : prog('UCWR 110') ? 0.5 : 0) + (done('WI 2') ? 1 : prog('WI 2') ? 0.5 : 0);
-  // Theology: 2 needed
-  const theoDone = (done('THEO 107') ? 1 : prog('THEO 107') ? 0.5 : 0) + (done('THEO 2XX') ? 1 : prog('THEO 2XX') ? 0.5 : 0);
-  // Social Science: 1 needed (either counts)
-  const ssDone = Math.min(1, (done('SOCL 101') ? 1 : prog('SOCL 101') ? 0.5 : 0) + (done('PSYC 101') ? 1 : prog('PSYC 101') ? 0.5 : 0));
+  // Theological: THEO 107 + THEO 2XX (2 needed)
+  const theo = val('THEO 107') + val('THEO 2XX');
+  // Societal & Cultural: SOCL 101 + PSYC 101 (2 needed)
+  const soc  = val('SOCL 101') + val('PSYC 101');
+  // Historical: HIST XXX + HIST XX2 (2 needed)
+  const hist = val('HIST XXX') + val('HIST XX2');
+  // Literary: LITR XXX + LITR XX2 (2 needed)
+  const lit  = val('LITR XXX') + val('LITR XX2');
+  // Philosophical: PHIL XXX + PHIL XX2 (2 needed)
+  const phil = val('PHIL XXX') + val('PHIL XX2');
+  // Scientific: SCI XXX + SCI XX2 (2 needed)
+  const sci  = val('SCI XXX')  + val('SCI XX2');
 
   return `<div class="core-tracker">
-    <div class="core-tracker-title">Core Requirements Progress</div>
-    ${bar('UNIV 101', val('UNIV 101'), 1)}
-    ${bar('Writing Intensive', wiDone, 2)}
-    ${bar('Theology I & II', theoDone, 2)}
-    ${bar('Philosophy / Ethics', val('PHIL 181'), 1)}
-    ${bar('Social Science', ssDone, 1)}
-    ${bar('Fine Arts', val('FINE ART'), 1)}
-    ${bar('Historical Studies', val('HIST XXX'), 1)}
-    ${bar('Engaged Learning', val('ENGAGED'), 1)}
-    ${bar('Foreign Language', val('LANG 102'), 1)}
+    <div class="core-tracker-title">Core Requirements Progress (16 courses · 48 cr)</div>
+    ${bar('UNIV 101',                      val('UNIV 101'),  1)}
+    ${bar('Engaged Learning',              val('ENGAGED'),   1)}
+    ${bar('College Writing Seminar',       val('UCWR 110'),  1)}
+    ${bar('Ethical Knowledge & Inquiry',   val('PHIL 181'),  1)}
+    ${bar('Artistic Knowledge & Inquiry',  val('ARTS XXX'),  1)}
+    ${bar('Quantitative Knowledge',        val('QANT XXX'),  1)}
+    ${bar('Historical Knowledge',          hist,             2)}
+    ${bar('Literary Knowledge',            lit,              2)}
+    ${bar('Philosophical Knowledge',       phil,             2)}
+    ${bar('Scientific Knowledge',          sci,              2)}
+    ${bar('Societal & Cultural Knowledge', soc,              2)}
+    ${bar('Theological & Religious',       theo,             2)}
   </div>`;
 }
 
